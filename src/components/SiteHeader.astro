@@ -13,8 +13,8 @@ const { name, tagline } = home.data;
 ---
 
 <header class="mb-[calc(var(--body-size)*4.5)] text-center">
-  <h1 class="display uppercase text-pink">
+  <h1 class="display uppercase text-pink max-md:text-[1.85rem]">
     {linkHome ? <a href="/" class="no-underline">{name}</a> : name}
   </h1>
-  <p class="display text-pink italic" style="font-size: calc(3.4rem * 0.56)">{tagline}</p>
+  <p class="display text-pink italic text-[calc(3.4rem*0.56)] max-md:text-[1.4rem]">{tagline}</p>
 </header>

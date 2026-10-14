@@ -71,6 +71,12 @@
     margin: 0;
   }
 
+  @media (max-width: 767px) {
+    .display {
+      font-size: 2.8rem;
+    }
+  }
+
   .label {
     color: var(--color-pink);
     font-weight: bold;
@@ -85,12 +91,13 @@
     margin-top: 1.5em;
   }
 
-  /* Photos in essays sit inline with the text, not edge to edge. */
+  /* Photos in essays sit centred in the text column, not edge to edge. */
   .copy img {
     display: block;
     width: 100%;
     max-width: 28rem;
     height: auto;
+    margin-inline: auto;
   }
 
   /* Portfolio pages use the same type, but calmer. */

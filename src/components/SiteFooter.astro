@@ -1,17 +1,15 @@
 ---
-import { getCollection, getEntry } from 'astro:content';
+import { getEntry } from 'astro:content';
 
 const home = await getEntry('home', 'home');
 if (!home) throw new Error('Missing src/content/home.md');
 const { name, email, substack, links, handle } = home.data;
 
-const projects = (await getCollection('projects', ({ data }) => !data.draft)).sort(
-  (a, b) => a.data.order - b.data.order,
-);
-// Quick links to the parts of the homepage.
+// Quick links to the main pages.
 const pages = [
   { label: 'Home', href: '/' },
   { label: 'Writing', href: '/#writing' },
+  { label: 'Portfolio', href: '/portfolio' },
 ];
 ---
 
@@ -21,35 +19,16 @@ const pages = [
       <p class="italic">Copywriter and creative based in Amsterdam.</p>
       <p class="mt-[1em]">Amsterdam<span data-clock></span></p>
       <p class="mt-[1em]"><a href={`mailto:${email}`}>Get in touch</a></p>
-      {
-        substack && (
-          // Opens Substack's own sign-up page with the email already filled in.
-          <form action={new URL('/subscribe', substack).href} method="get" target="_blank" class="subscribe mt-[1.5em]">
-            <label for="footer-email" class="text-muted">New writing by email, via Substack</label>
-            <div class="mt-[0.25em] flex items-baseline gap-x-[1em]">
-              <input id="footer-email" type="email" name="email" required placeholder="Your email" autocomplete="email" />
-              <button type="submit">Subscribe</button>
-            </div>
-          </form>
-        )
-      }
     </div>
 
-    <nav class="col-span-2 max-md:col-span-1" aria-label="Fraeji">
-      <h2 class="text-muted">Fraeji</h2>
+    <nav class="col-span-2 max-md:col-span-1" aria-label="Index">
+      <h2 class="text-muted">Index</h2>
       <ul>
         {pages.map((page) => <li><a href={page.href}>{page.label}</a></li>)}
       </ul>
     </nav>
 
-    <nav class="col-span-2 max-md:col-span-1" aria-label="Portfolio">
-      <h2 class="text-muted"><a href="/portfolio" class="text-muted no-underline hover:underline">Portfolio</a></h2>
-      <ul>
-        {projects.map((project) => <li><a href={`/portfolio/${project.id}`}>{project.data.title}</a></li>)}
-      </ul>
-    </nav>
-
-    <nav class="col-span-2 max-md:col-span-2" aria-label="Elsewhere">
+    <nav class="col-span-2 max-md:col-span-1" aria-label="Elsewhere">
       <h2 class="text-muted">Elsewhere</h2>
       <ul>
         {
@@ -63,6 +42,19 @@ const pages = [
         <li><a href={handle.url} target="_blank" rel="noopener">{handle.label}</a> everywhere</li>
       </ul>
     </nav>
+
+    {
+      substack && (
+        // Opens Substack's own sign-up page with the email already filled in.
+        <form action={new URL('/subscribe', substack).href} method="get" target="_blank" class="subscribe col-span-4 max-md:col-span-2">
+          <label for="footer-email" class="text-muted">New writing by email, via Substack</label>
+          <div class="mt-[0.25em] flex items-baseline gap-x-[1em]">
+            <input id="footer-email" type="email" name="email" required placeholder="Your email" autocomplete="email" />
+            <button type="submit">Subscribe</button>
+          </div>
+        </form>
+      )
+    }
   </div>
 
   <p class="mt-[3em] text-muted">©{name} / {new Date().getFullYear()}</p>
@@ -85,7 +77,6 @@ const pages = [
   .subscribe input {
     flex: 1;
     min-width: 0;
-    max-width: 16em;
     padding: 0.15em 0;
     border: 0;
     border-bottom: 1px solid var(--color-rule);
