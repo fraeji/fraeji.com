@@ -1,0 +1,63 @@
+---
+import { render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import { getEssays, getSeries, getSeriesEssays } from '../lib/essays';
+
+// Essays live at the root (fraeji.com/on-supermarkets), same as on Cargo.
+export async function getStaticPaths() {
+  const essays = await getEssays();
+  return essays.map((essay) => ({ params: { essay: essay.id }, props: { essay } }));
+}
+
+const { essay } = Astro.props;
+const { Content } = await render(essay);
+const { title, featured, part } = essay.data;
+
+const series = essay.data.series ? await getSeries(essay.data.series) : undefined;
+const seriesEssays = essay.data.series ? await getSeriesEssays(essay.data.series) : [];
+const seriesLabel = series && (part ? `${series.data.title} #${part}` : series.data.title);
+const description = essay.data.description ?? series?.data.description;
+---
+
+<Base title={seriesLabel ? `${seriesLabel}: ${title}` : title} description={description}>
+  <SiteHeader linkHome />
+
+  <article class="mx-auto max-w-[52rem]">
+    {seriesLabel && <p class="label mb-[0.5em]">{seriesLabel}</p>}
+    <h2 class="display">{title}</h2>
+    {series?.data.description && <p class="mt-[1.5em] italic">{series.data.description}</p>}
+    {
+      featured && (
+        <p class:list={['italic', series?.data.description ? 'mt-0' : 'mt-[1.5em]']}>
+          <a href={featured.url} target="_blank" rel="noopener">
+            {featured.label}
+          </a>
+        </p>
+      )
+    }
+    <div class:list={['copy', featured || series?.data.description ? 'mt-[1.5em]' : 'mt-[3em]']}>
+      <Content />
+    </div>
+    {
+      series && seriesEssays.length > 1 && (
+        <nav class="mt-[3em]" aria-label={`More from ${series.data.title}`}>
+          <hr />
+          <p class="label mt-[1.5em]">More from {series.data.title}</p>
+          <ul class="mt-[0.5em]">
+            {seriesEssays.map((other) => (
+              <li>
+                {other.data.part && <>#{other.data.part} </>}
+                {other.id === essay.id ? (
+                  <span aria-current="page">{other.data.title}</span>
+                ) : (
+                  <a href={`/${other.id}`}>{other.data.title}</a>
+                )}
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )
+    }
+  </article>
+</Base>

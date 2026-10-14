@@ -1,0 +1,154 @@
+---
+// Photos that fly across the homepage, like Cargo's "flying object".
+import { getImage } from 'astro:assets';
+import freyaYoung from '../assets/flying/freya-young.jpg';
+import freya from '../assets/flying/freya.jpg';
+
+const photos = await Promise.all(
+  [
+    { src: freyaYoung, alt: 'Freya as a child' },
+    { src: freya, alt: 'Freya' },
+  ].map(async (photo) => {
+    const image = await getImage({ src: photo.src, width: 500, format: 'webp' });
+    return { ...photo, url: image.src };
+  }),
+);
+---
+
+<div class="flying-photos" aria-hidden="true">
+  {
+    photos.map((photo) => (
+      <div class="flier">
+        <div class="spinner">
+          <img src={photo.url} alt={photo.alt} />
+        </div>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .flying-photos {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    overflow: hidden;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .flier {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translateX(-100%) translateY(-100%);
+    will-change: transform;
+  }
+
+  /* Ten full turns every 54 seconds, as on the Cargo site. */
+  .spinner {
+    width: 9.8vmax;
+    height: 9.8vmax;
+    animation: spin 54s linear infinite;
+  }
+
+  .spinner img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(3600deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .spinner {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  // A copy of Cargo's flying object: each photo crosses the screen in a
+  // straight line from one edge to the opposite one, waits two seconds
+  // off-screen, then comes back from another side. Every four crossings
+  // (left-to-right, right-to-left, top-to-bottom, bottom-to-top, in a
+  // shuffled order) it picks a new set of paths.
+  const SIZE = 9.8; // vmax, matches .spinner
+  const OFF = 1.4 * SIZE; // how far off-screen each crossing starts and ends
+  const CROSSING = 14500; // ms per crossing (Cargo speed 42)
+  const DELAY = 2000; // ms off-screen before each crossing
+
+  type Point = { x: string; y: string };
+
+  function randomInt(min: number, max: number) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  function shuffle<T>(items: T[], seed: number) {
+    const random = (n: number) => {
+      const x = Math.sin(n) * 10000;
+      return x - Math.floor(x);
+    };
+    for (let i = items.length; i; seed++) {
+      const j = Math.floor(random(seed) * i--);
+      [items[i], items[j]] = [items[j], items[i]];
+    }
+    return items;
+  }
+
+  function crossings(count: number): [Point, Point][] {
+    const even = count % 2 === 0;
+    const near = () => randomInt(even ? -OFF : 60, even ? 40 : 100 + OFF);
+    const far = () => randomInt(even ? 60 : -OFF, even ? 100 + OFF : 40);
+    const left = `calc(0vw - ${OFF}vmax)`;
+    const right = `calc(100vw + ${OFF}vmax)`;
+    const top = `calc(0vh - ${OFF}vmax)`;
+    const bottom = `calc(100vh + ${OFF}vmax)`;
+    const paths: Record<string, () => [Point, Point]> = {
+      ltr: () => [{ x: left, y: `${near()}vh` }, { x: right, y: `${far()}vh` }],
+      rtl: () => [
+        { x: right, y: `${far()}vh` },
+        { x: left, y: `${randomInt(even ? 0 : 60, even ? 40 : 100 + OFF)}vh` },
+      ],
+      ttb: () => [{ x: `${near()}vw`, y: top }, { x: `${far()}vw`, y: bottom }],
+      btt: () => [{ x: `${far()}vw`, y: bottom }, { x: `${near()}vw`, y: top }],
+    };
+    return shuffle(['ltr', 'rtl', 'ttb', 'btt'], count).map((dir) => paths[dir]());
+  }
+
+  const at = (p: Point) => `translateX(${p.x}) translateY(${p.y})`;
+
+  function fly(el: HTMLElement) {
+    let count = randomInt(1, 10000);
+    let legs = crossings(count);
+    let leg = 0;
+
+    const next = () => {
+      const [from, to] = legs[leg];
+      el.animate([{ transform: at(from) }, { transform: at(to) }], {
+        duration: CROSSING,
+        delay: DELAY,
+        easing: 'linear',
+      }).onfinish = () => {
+        leg = (leg + 1) % 4;
+        if (leg === 0) legs = crossings(++count);
+        next();
+      };
+    };
+    next();
+  }
+
+  // With reduced motion, the photos sit still somewhere on screen instead.
+  function rest(el: HTMLElement) {
+    el.style.transform = `translateX(${randomInt(5, 80)}vw) translateY(${randomInt(5, 70)}vh)`;
+  }
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll<HTMLElement>('.flying-photos .flier').forEach(reduceMotion ? rest : fly);
+</script>

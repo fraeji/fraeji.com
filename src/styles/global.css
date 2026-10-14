@@ -1,0 +1,125 @@
+@import 'tailwindcss';
+@import '@fontsource/sorts-mill-goudy/400.css';
+@import '@fontsource/sorts-mill-goudy/400-italic.css';
+
+@theme {
+  --font-serif: 'Sorts Mill Goudy', Georgia, serif;
+  --color-ink: rgb(0 0 0 / 0.85);
+  --color-pink: rgb(255 10 239 / 0.85);
+  --color-pink-dark: rgb(200 0 186);
+  --color-rule: rgb(127 127 127 / 0.4);
+  --color-muted: rgb(0 0 0 / 0.45);
+}
+
+/*
+ * Cargo scales the whole site with the root font size: on desktop it tracks the
+ * window height, on phones the width. Everything below is sized in rem so the
+ * proportions match the old site at any size.
+ */
+@layer base {
+  html {
+    font-size: min(1.44vh, 1.25vw);
+    -webkit-text-size-adjust: 100%;
+    --body-size: 1.55rem;
+  }
+
+  @media (max-width: 767px) {
+    html {
+      font-size: 3.136vw;
+      --body-size: 1.75rem;
+    }
+  }
+
+  body {
+    @apply bg-white font-serif text-ink;
+    font-size: var(--body-size);
+    line-height: 1.5;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  a {
+    color: var(--color-pink);
+    text-decoration: underline;
+  }
+
+  /* Hovering a link darkens it, so it's clear what you're pointing at. */
+  a:hover,
+  a:focus-visible {
+    color: var(--color-pink-dark);
+  }
+
+  a:active {
+    opacity: 0.7;
+  }
+
+  hr {
+    height: 1px;
+    border: 0;
+    background: var(--color-rule);
+    margin: 0.5em 0;
+  }
+}
+
+@layer components {
+  /* The big serif headings (name, essay titles). */
+  .display {
+    font-size: 3.4rem;
+    line-height: 1.1;
+    font-weight: 400;
+    margin: 0;
+  }
+
+  .label {
+    color: var(--color-pink);
+    font-weight: bold;
+  }
+
+  /* Running text: one blank line between paragraphs, like the Cargo pages. */
+  .copy > * {
+    margin: 0;
+  }
+
+  .copy > * + * {
+    margin-top: 1.5em;
+  }
+
+  /* Photos in essays sit inline with the text, not edge to edge. */
+  .copy img {
+    display: block;
+    width: 100%;
+    max-width: 28rem;
+    height: auto;
+  }
+
+  /* Portfolio pages use the same type, but calmer. */
+  .project h2 {
+    font-size: 1em;
+    font-weight: bold;
+    color: var(--color-pink);
+    margin-top: 3em;
+  }
+
+  .project h2 + * {
+    margin-top: 0.75em;
+  }
+
+  .project img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  /* Images on consecutive lines in markdown sit side by side. */
+  .project p:has(> img) {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    align-items: start;
+  }
+
+  .project p:has(> img:only-child) {
+    display: block;
+  }
+}

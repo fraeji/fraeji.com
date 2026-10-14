@@ -1,0 +1,20 @@
+---
+import { getEntry } from 'astro:content';
+
+interface Props {
+  // On inner pages the name links back home.
+  linkHome?: boolean;
+}
+
+const { linkHome = false } = Astro.props;
+const home = await getEntry('home', 'home');
+if (!home) throw new Error('Missing src/content/home.md');
+const { name, tagline } = home.data;
+---
+
+<header class="mb-[calc(var(--body-size)*4.5)] text-center">
+  <h1 class="display uppercase text-pink">
+    {linkHome ? <a href="/" class="no-underline">{name}</a> : name}
+  </h1>
+  <p class="display text-pink italic" style="font-size: calc(3.4rem * 0.56)">{tagline}</p>
+</header>

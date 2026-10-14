@@ -1,0 +1,39 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+
+const projects = (await getCollection('projects', ({ data }) => !data.draft)).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+---
+
+<Base title="Portfolio" description="Selected copywriting, creative direction and editorial work.">
+  <SiteHeader linkHome />
+
+  <h2 class="display text-pink">Portfolio</h2>
+
+  <ul class="mt-[3em] grid grid-cols-3 gap-x-12 gap-y-16 max-md:grid-cols-1">
+    {
+      projects.map((project) => (
+        <li>
+          <a href={`/portfolio/${project.id}`} class="group block text-ink no-underline">
+            {project.data.cover && (
+              <Image
+                src={project.data.cover}
+                alt={project.data.coverAlt ?? ''}
+                widths={[480, 800, 1200]}
+                sizes="(max-width: 767px) 100vw, 33vw"
+                class="aspect-[4/3] w-full object-cover transition-opacity group-hover:opacity-80 group-focus-visible:opacity-80"
+              />
+            )}
+            <span class="mt-[0.75em] block text-pink underline group-hover:text-pink-dark group-focus-visible:text-pink-dark">{project.data.title}</span>
+            {project.data.role && <span class="block">{project.data.role}</span>}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+
+</Base>

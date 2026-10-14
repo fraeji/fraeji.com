@@ -1,0 +1,189 @@
+# Pages CMS (https://pagescms.org): a web editor for the markdown in this repo.
+# Sign in with GitHub at app.pagescms.org and open this repository.
+
+media:
+  - name: projects
+    label: Portfolio images
+    input: src/assets/projects
+    # Written into the markdown relative to src/content/projects/*.md
+    output: ../../assets/projects
+    categories: [image]
+    rename: safe
+  - name: essays
+    label: Essay images
+    input: src/assets/essays
+    # Written into the markdown relative to src/content/essays/*.md
+    output: ../../assets/essays
+    categories: [image]
+    rename: safe
+
+content:
+  - name: essays
+    label: Essays
+    type: collection
+    path: src/content/essays
+    filename: '{fields.title}.md'
+    view:
+      fields: [title, order, draft]
+      sort: [order]
+      default:
+        sort: order
+        order: asc
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: order
+        label: Position in the Writing list (lower comes first)
+        type: number
+        required: true
+      - name: description
+        label: Short description (for search engines and link previews)
+        type: text
+      - name: series
+        label: Part of a series (optional)
+        type: reference
+        options:
+          collection: series
+          search: title
+          label: '{title}'
+      - name: part
+        label: Number in the series (1, 2, 3…)
+        type: number
+      - name: featured
+        label: Also published in…
+        type: object
+        fields:
+          - name: label
+            label: Text
+            type: string
+          - name: url
+            label: Link
+            type: string
+      - name: draft
+        label: Hide from the site
+        type: boolean
+        default: false
+      - name: body
+        label: Essay
+        type: rich-text
+        options:
+          media: essays
+
+  - name: series
+    label: Series
+    type: collection
+    path: src/content/series
+    filename: '{fields.title}.md'
+    view:
+      fields: [title]
+    fields:
+      - name: title
+        label: Name
+        type: string
+        required: true
+      - name: description
+        label: One line about the series (shown under each essay title)
+        type: text
+
+  - name: projects
+    label: Portfolio
+    type: collection
+    path: src/content/projects
+    filename: '{fields.title}.md'
+    view:
+      fields: [title, role, order, draft]
+      sort: [order]
+      default:
+        sort: order
+        order: asc
+    fields:
+      - name: title
+        label: Client / project
+        type: string
+        required: true
+      - name: order
+        label: Position on the portfolio page (lower comes first)
+        type: number
+        required: true
+      - name: role
+        label: Role
+        type: string
+      - name: year
+        label: Years
+        type: string
+      - name: summary
+        label: Short summary (for search engines and link previews)
+        type: text
+      - name: cover
+        label: Cover image
+        type: image
+        options:
+          media: projects
+      - name: coverAlt
+        label: Cover image description
+        type: string
+      - name: link
+        label: Website
+        type: string
+      - name: draft
+        label: Hide from the site
+        type: boolean
+        default: false
+      - name: body
+        label: Project
+        type: rich-text
+        options:
+          media: projects
+
+  - name: home
+    label: Homepage
+    type: file
+    path: src/content/home.md
+    fields:
+      - name: name
+        label: Name
+        type: string
+      - name: tagline
+        label: Tagline
+        type: string
+      - name: email
+        label: Email
+        type: string
+      - name: substack
+        label: Substack (for the sign-up box in the footer)
+        type: string
+      - name: links
+        label: Links
+        type: object
+        list: true
+        fields:
+          - name: label
+            type: string
+          - name: url
+            type: string
+      - name: handle
+        label: Handle
+        type: object
+        fields:
+          - name: label
+            type: string
+          - name: url
+            type: string
+      - name: experience
+        label: What I’ve been up to
+        type: object
+        list: true
+        fields:
+          - name: role
+            type: string
+          - name: dates
+            type: string
+          - name: company
+            type: string
+      - name: body
+        label: Nice to meet you
+        type: rich-text
+        options:
+          media: false

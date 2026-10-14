@@ -1,0 +1,74 @@
+---
+import { getEntry, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import FlyingPhotos from '../components/FlyingPhotos.astro';
+import { getEssays } from '../lib/essays';
+
+const home = await getEntry('home', 'home');
+if (!home) throw new Error('Missing src/content/home.md');
+const { Content: Intro } = await render(home);
+const { email, links, handle, experience } = home.data;
+
+const essays = (await getEssays()).sort((a, b) => a.data.order - b.data.order);
+---
+
+<Base>
+  <SiteHeader />
+
+  <div class="grid grid-cols-3 gap-x-12 max-md:grid-cols-1 max-md:gap-y-40">
+    <section>
+      <h2 class="label">Nice to meet you</h2>
+      <div class="copy mt-[1.5em]">
+        <Intro />
+        <p>
+          <a href={`mailto:${email}`}>Get in touch.</a><br />
+          {
+            links.map((link) => (
+              <>
+                <a href={link.url} target="_blank" rel="noopener">
+                  {link.label}
+                </a>
+                <br />
+              </>
+            ))
+          }
+          <a href={handle.url} target="_blank" rel="noopener">{handle.label}</a> everywhere.
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="label">What I’ve been up to</h2>
+      <div class="copy mt-[1.5em]">
+        {
+          experience.map((job) => (
+            <p>
+              {job.role} |<br />
+              {job.dates}
+              <br />
+              {job.company}
+            </p>
+          ))
+        }
+      </div>
+      <hr />
+    </section>
+
+    <section id="writing">
+      <h2 class="label">Writing</h2>
+      <ul class="mt-[1.5em]">
+        {
+          essays.map((essay) => (
+            <li>
+              <a href={`/${essay.id}`}>{essay.data.title}</a>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="mt-[1.5em] font-bold"><a href="/portfolio">Portfolio</a></p>
+    </section>
+  </div>
+
+  <FlyingPhotos />
+</Base>
