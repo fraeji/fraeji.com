@@ -1,6 +1,7 @@
 ---
 import { getCollection, getEntry, render } from 'astro:content';
 import { Image } from 'astro:assets';
+import nrHover from '../assets/projects/nr-magazine/nr-17-4.jpg';
 import Base from '../layouts/Base.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import FlyingPhotos from '../components/FlyingPhotos.astro';
@@ -11,7 +12,9 @@ if (!home) throw new Error('Missing src/content/home.md');
 const { Content: Intro } = await render(home);
 const { likes } = home.data;
 
-const essays = (await getEssays()).sort((a, b) => a.data.order - b.data.order);
+const essays = (await getEssays())
+  .filter((essay) => essay.id !== 'gardening-1-your-unemployed-friend')
+  .sort((a, b) => a.data.order - b.data.order);
 const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
 ---
 
@@ -38,7 +41,13 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
           <li><a class="project-preview-link" href={`/portfolio/${project.id}/`}>
             {project.data.title}
             <span class="project-hover-preview" aria-hidden="true">
-              {project.id === 'citizenm' ? <img src="/images/citizenm/november-sale-hero.jpg" alt="" /> : <Image src={project.data.cover} alt="" width={840} />}
+              {project.id === 'citizenm' ? (
+                <img src="/images/citizenm/november-sale-hero.jpg" alt="" />
+              ) : project.id === 'nr-magazine' ? (
+                <Image src={nrHover} alt="" width={840} height={473} fit="cover" />
+              ) : (
+                <Image src={project.data.cover} alt="" width={840} />
+              )}
               <span class="preview-role">{project.data.role}<br />{project.data.year}</span>
             </span>
           </a></li>
