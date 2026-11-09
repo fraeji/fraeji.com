@@ -4,8 +4,8 @@ order: 5
 role: Brand strategy & creative production
 year: 2021 – 2022
 summary: Editorial shoots and platform copy for a fashion e-commerce platform.
-cover: ../../assets/projects/otrium/festive-3.jpg
-coverAlt: Two models laughing, from Otrium’s FW21 festive campaign
+cover: ../../assets/projects/otrium/otrium-you-7.jpg
+coverAlt: Model in sunglasses and a white top beside a reflective shop window, from Otrium x You
 ---
 
 Otrium is a fashion e-commerce platform that believes all clothing should be worn. As an editorial strategist, I produced editorial shoots and wrote engaging copy while keeping the look and feel consistent with the brand’s identity and vision.
