@@ -341,21 +341,6 @@
     margin-top: 0;
   }
 
-  .project-page--vio #save-money-while-you-sleep,
-  .project-page--vio #save-money-while-you-sleep + p {
-    width: min(100%, 42rem);
-    margin-inline: auto;
-  }
-
-  .project-page--vio .vio-tov-continuous + h2 {
-    margin-top: 3em;
-  }
-
-  .project-page--vio #save-money-while-you-sleep + p {
-    margin-top: 1.25em;
-    margin-bottom: 3em;
-  }
-
   .project-page--dyson .dyson-vis-nav-copy {
     grid-column: 2 / span 5;
     display: flex;
@@ -1284,7 +1269,7 @@
 .project-page--dyson .social-carousel .image-carousel__slide video { height: min(60vh, 32rem); width: auto; max-width: 100%; margin-inline: auto; object-fit: contain; }
 
 /* Shared case-study header: navigation, title, then role and date. */
-.project-page[class] .project-heading { display: block; width: min(100%, 60rem); margin-inline: auto; text-align: left; }
+.project-page[class] .project-heading { display: block; width: min(100%, var(--project-copy-width)); margin-inline: auto; text-align: left; }
 .project-page[class] .project-heading > p:first-child { margin: 0 0 1.5em; }
 .project-page[class] .project-heading > h2 { margin: 0; text-align: left; }
 .project-page[class] .project-heading > p:last-child { margin: .75em 0 0; text-align: left; }
@@ -1296,3 +1281,68 @@
 .project-page--dyson .dyson-vis-nav-copy { width: min(100%, 42rem); margin-inline: auto; }
 .project-page--dyson .dyson-vis-nav-visual { width: min(100%, 42rem); margin-inline: auto; }
 @media (max-width: 768px) { .project-page--vio > .vio-title-animation { width: 100%; } }
+
+
+/* One reading width and spacing rhythm across all case studies. */
+.project-page {
+  --project-copy-width: 42rem;
+  --project-paragraph-space: 1.5em;
+  --project-heading-space: 1.25em;
+  --project-section-space: 3em;
+}
+
+.project-page[class] .project > h2,
+.project-page[class] .project > p:not(:has(img, video, picture)) {
+  width: min(100%, var(--project-copy-width));
+  margin-inline: auto;
+}
+
+.project-page[class] .project > p:not(:has(img, video, picture)) {
+  margin-top: var(--project-paragraph-space);
+  margin-bottom: 0;
+}
+
+.project-page[class] .project > h2,
+.project-page[class] .project > section,
+.project-page[class] .project > :not(h2, section, p:not(:has(img, video, picture))) {
+  margin-top: var(--project-section-space);
+  margin-bottom: 0;
+}
+
+.project-page[class] .project > h2 + p:not(:has(img, video, picture)) {
+  margin-top: var(--project-heading-space);
+}
+
+.project-page[class] .project > :not(h2, p:not(:has(img, video, picture))) + p:not(:has(img, video, picture)) {
+  margin-top: var(--project-section-space);
+}
+
+.project-page[class] .project > :first-child {
+  margin-top: 0;
+}
+
+.project-page[class] .project-section,
+.project-page[class] .dyson-vis-nav-section {
+  gap: var(--project-section-space);
+}
+
+.project-page[class] .project-section__copy,
+.project-page[class] .dyson-vis-nav-copy {
+  display: block;
+}
+
+.project-page[class] :is(.project-section__copy, .dyson-vis-nav-copy, .dyson-british-summer) > * {
+  margin-block: 0;
+}
+
+.project-page[class] :is(.project-section__copy, .dyson-vis-nav-copy, .dyson-british-summer) > * + * {
+  margin-top: var(--project-paragraph-space);
+}
+
+.project-page[class] :is(.project-section__copy, .dyson-vis-nav-copy, .dyson-british-summer) > h2 + * {
+  margin-top: var(--project-heading-space);
+}
+
+.project-page[class] .project-section > .project-section__copy + * {
+  margin-top: 0;
+}
