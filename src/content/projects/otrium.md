@@ -8,7 +8,7 @@ cover: ../../assets/projects/otrium/otrium-you-7.jpg
 coverAlt: Model in sunglasses and a white top beside a reflective shop window, from Otrium x You
 ---
 
-Otrium is a fashion e-commerce platform that believes all clothing should be worn. As an editorial strategist, I produced editorial shoots and wrote engaging copy while keeping the look and feel consistent with the brand’s identity and vision.
+During my time at Otrium, I produced editorial shoots and wrote engaging copy while keeping the look and feel consistent with the brand’s identity and vision.
 
 ## Otrium x You with Winter van den Brink
 
