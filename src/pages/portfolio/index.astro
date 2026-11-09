@@ -1,35 +1,70 @@
 ---
 import { getCollection } from 'astro:content';
-import { Image } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
+import { Image } from 'astro:assets';
 
 const projects = (await getCollection('projects', ({ data }) => !data.draft)).sort(
   (a, b) => a.data.order - b.data.order,
 );
+
+const logoNames: Record<string, string> = {
+  vio: 'Vio',
+  dyson: 'Dyson',
+  citizenm: 'citizenM',
+  'nr-magazine': 'NR Magazine',
+  otrium: 'Otrium',
+};
+
+const logoAssets: Record<string, { src: string; alt: string }> = {
+  vio: { src: '/logos/vio.svg', alt: 'Vio.com' },
+  dyson: { src: '/logos/dyson.svg', alt: 'Dyson' },
+  citizenm: { src: '/logos/citizenm.png', alt: 'citizenM' },
+  'nr-magazine': { src: '/logos/nr-magazine-cover.jpg', alt: 'NR Magazine' },
+  otrium: { src: '/logos/otrium.svg', alt: 'Otrium' },
+};
+const previews: Record<string, string> = {
+  vio: '/videos/vio/vio-monks-vegas-price-insights-16x9.webm',
+  dyson: '/videos/dyson/dyson-journeys-of-time.mp4',
+  citizenm: '/videos/citizenm/rome-artist-files.mp4',
+};
+
 ---
 
 <Base title="Portfolio" description="Selected copywriting, creative direction and editorial work.">
   <SiteHeader linkHome />
 
-  <h2 class="display text-pink">Portfolio</h2>
+  <p class="mb-[1.5em]"><a href="/">← Home</a></p>
+  <h2 class="display text-pink">Recent work</h2>
 
-  <ul class="mt-[3em] grid grid-cols-3 gap-x-12 gap-y-16 max-md:grid-cols-1">
+  <div class="portfolio-intro" aria-label="Portfolio introduction">
+    <p>
+      For nearly 10 years, I've written, directed and strategised for clients ranging from arthouse magazines to tech giants.
+    </p>
+    <p>
+      Whether you’re searching for your brand voice, need help with storyboarding or are looking for a killer campaign script, I can help. Let’s make some cool work together.
+    </p>
+  </div>
+
+  <ul class="portfolio-logo-grid" aria-label="Portfolio case studies">
     {
       projects.map((project) => (
         <li>
-          <a href={`/portfolio/${project.id}`} class="group block text-ink no-underline">
-            {project.data.cover && (
-              <Image
-                src={project.data.cover}
-                alt={project.data.coverAlt ?? ''}
-                widths={[480, 800, 1200]}
-                sizes="(max-width: 767px) 100vw, 33vw"
-                class="aspect-[4/3] w-full object-cover transition-opacity group-hover:opacity-80 group-focus-visible:opacity-80"
-              />
-            )}
-            <span class="mt-[0.75em] block text-pink underline group-hover:text-pink-dark group-focus-visible:text-pink-dark">{project.data.title}</span>
-            {project.data.role && <span class="block">{project.data.role}</span>}
+          <a
+            href={`/portfolio/${project.id}`}
+            class:list={['portfolio-logo', `portfolio-logo--${project.id}`]}
+            aria-label={`${logoNames[project.id] ?? project.data.title} case study`}
+          >
+            <span class="portfolio-logo__mark">
+              {previews[project.id] ? (
+                <video autoplay muted loop playsinline preload="metadata" aria-hidden="true">
+                  <source src={previews[project.id]} />
+                </video>
+              ) : (
+                <Image src={project.data.cover} alt={project.data.coverAlt ?? project.data.title} width={1200} />
+              )}
+            </span>
+            <span class="project-card-caption"><span>{logoNames[project.id] ?? project.data.title}</span><span>{project.data.role}</span></span>
           </a>
         </li>
       ))
@@ -37,3 +72,157 @@ const projects = (await getCollection('projects', ({ data }) => !data.draft)).so
   </ul>
 
 </Base>
+
+<style>
+  .portfolio-logo-grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: clamp(4rem, 9vw, 9rem) 3rem;
+    margin-top: clamp(4rem, 8vw, 8rem);
+  }
+
+  .portfolio-intro {
+    max-width: 52rem;
+    margin-top: 1.5em;
+    color: var(--color-ink);
+    font-size: inherit;
+    line-height: inherit;
+  }
+
+  .portfolio-intro p {
+    margin: 0;
+  }
+
+  .portfolio-intro p + p {
+    margin-top: 1em;
+  }
+
+  .portfolio-logo-grid li {
+    grid-column: span 2;
+  }
+
+  .portfolio-logo-grid li:nth-child(4) {
+    grid-column: 2 / span 2;
+  }
+
+  .portfolio-logo-grid li:nth-child(5) {
+    grid-column: 4 / span 2;
+  }
+
+  .portfolio-logo {
+    display: flex;
+    min-height: clamp(7rem, 12vw, 12rem);
+    align-items: center;
+    justify-content: center;
+    color: var(--color-ink);
+    text-align: center;
+    text-decoration: none;
+    transition: color 180ms ease, transform 180ms ease;
+  }
+
+  .portfolio-logo:hover,
+  .portfolio-logo:focus-visible {
+    color: var(--color-pink);
+    transform: scale(1.04);
+  }
+
+  .portfolio-logo:focus-visible {
+    outline: 2px solid var(--color-pink);
+    outline-offset: 0.5rem;
+  }
+
+  .portfolio-logo__mark {
+    display: block;
+    width: min(100%, 15rem);
+  }
+
+  .portfolio-logo__mark img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 5.5rem;
+    object-fit: contain;
+    filter: grayscale(1) brightness(0);
+  }
+
+  .portfolio-logo--vio .portfolio-logo__mark {
+    width: min(100%, 14rem);
+  }
+
+  .portfolio-logo--dyson .portfolio-logo__mark {
+    width: min(100%, 14rem);
+  }
+
+  .portfolio-logo--citizenm .portfolio-logo__mark {
+    width: min(100%, 11rem);
+  }
+
+  .portfolio-logo--citizenm .portfolio-logo__mark img {
+    max-height: 5.5rem;
+  }
+
+  .portfolio-logo--nr-magazine .portfolio-logo__mark {
+    width: min(100%, 15rem);
+    aspect-ratio: 4 / 1;
+    overflow: hidden;
+  }
+
+  .portfolio-logo--nr-magazine .portfolio-logo__mark img {
+    height: auto;
+    max-height: none;
+    object-fit: initial;
+    filter: grayscale(1) brightness(2) contrast(3) invert(1);
+  }
+
+  .portfolio-logo--otrium .portfolio-logo__mark {
+    width: min(100%, 15rem);
+  }
+
+  @media (max-width: 767px) {
+    .portfolio-logo-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 3rem 1.5rem;
+    }
+
+    .portfolio-logo-grid li,
+    .portfolio-logo-grid li:nth-child(4),
+    .portfolio-logo-grid li:nth-child(5) {
+      grid-column: span 1;
+    }
+
+    .portfolio-logo {
+      min-height: 6rem;
+    }
+  }
+  .portfolio-logo-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4rem 2rem;
+    margin-top: 4rem;
+  }
+  .portfolio-logo-grid li:nth-child(n) { grid-column: auto; }
+  .portfolio-logo { display: block; text-align: left; min-height: 0; }
+  .portfolio-logo:hover, .portfolio-logo:focus-visible { transform: none; }
+  .portfolio-logo .portfolio-logo__mark {
+    width: 100%;
+    aspect-ratio: 16 / 11;
+    overflow: hidden;
+    background: #f7f5f2;
+  }
+  .portfolio-logo .portfolio-logo__mark img,
+  .portfolio-logo .portfolio-logo__mark video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    object-fit: cover;
+    filter: none;
+    transition: transform 400ms ease;
+  }
+  .portfolio-logo:hover .portfolio-logo__mark > * { transform: scale(1.025); }
+  .project-card-caption { display: flex; flex-direction: column; gap: .3rem; margin-top: 1rem; }
+  .project-card-caption > span:first-child { font-size: 1.35em; }
+  .project-card-caption > span:last-child { color: #777; font-size: .9em; }
+  @media (max-width: 767px) {
+    .portfolio-logo-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  }
+</style>

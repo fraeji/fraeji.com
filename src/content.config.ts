@@ -20,6 +20,7 @@ const home = defineCollection({
         company: z.string(),
       }),
     ),
+    likes: z.array(z.string()),
   }),
 });
 
@@ -66,6 +67,7 @@ const projects = defineCollection({
       // Position on the portfolio page. Lower comes first.
       order: z.number(),
       client: z.string().optional(),
+      collaboration: z.string().optional(),
       role: z.string().optional(),
       year: z.string().optional(),
       summary: z.string().optional(),

@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+import otriumHero from '../../assets/projects/otrium/festive-4.jpg';
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
@@ -21,31 +23,843 @@ const { title, role, year, summary, link } = project.data;
 <Base title={title} description={summary}>
   <SiteHeader linkHome />
 
-  <article class="mx-auto max-w-[60rem]">
-    <p><a href="/portfolio">← Portfolio</a></p>
-    <h2 class="display mt-[1em] text-pink">{title}</h2>
-    <p class="mt-[1.5em]">
-      {role}
-      {role && year && <br />}
-      {year}
-      {
-        link && (
-          <>
-            <br />
-            <a href={link} target="_blank" rel="noopener">
-              {new URL(link).hostname.replace(/^www\./, '')}
-            </a>
-          </>
-        )
-      }
-    </p>
+  <article
+    class:list={[
+      'project-page',
+      project.id === 'dyson' ? 'project-page--dyson' : 'mx-auto',
+      project.id === 'vio' ? 'project-page--vio' : undefined,
+      project.id === 'citizenm' ? 'project-page--citizenm' : undefined,
+      project.id === 'otrium' ? 'project-page--otrium' : undefined,
+      project.id === 'nr-magazine' ? 'project-page--nr-magazine' : undefined,
+      project.id === 'dyson' ? undefined : 'max-w-[60rem]',
+    ]}
+  >
+    <header class="project-heading">
+      <p><a href="/portfolio">← Portfolio</a></p>
+      <h2 class="display mt-[1em] text-pink">{title}</h2>
+      <p class="mt-[1.5em]">
+        {role}
+        {role && year && <br />}
+        {year}
+        {project.data.collaboration && <><br />{project.data.collaboration}</>}
+        {
+          link && (
+            <>
+              <br />
+              <a href={link} target="_blank" rel="noopener">
+                {new URL(link).hostname.replace(/^www\./, '')}
+              </a>
+            </>
+          )
+        }
+      </p>
+    </header>
+      {project.id === 'vio' && (
+        <video
+          class="vio-title-animation"
+          src="/videos/vio/logo-animation.mp4"
+          autoplay
+          loop
+          muted
+          playsinline
+          aria-label="Vio logo animation"
+        ></video>
+      )}
+
+
+    {project.id === 'citizenm' && (
+      <figure class="project-clip project-clip--hero citizenm-hero">
+        <img
+          src="/images/citizenm/november-sale-hero.jpg"
+          alt="citizenM November sale campaign hero"
+        />
+      </figure>
+    )}
+
+    {project.id === 'otrium' && (
+      <figure class="otrium-hero">
+        <Image src={otriumHero} alt="Two women in pink from Otrium’s festive campaign" widths={[800, 1400, 2000]} sizes="(max-width: 768px) 100vw, 90vw" loading="eager" />
+      </figure>
+    )}
 
     <div class="copy project mt-[3em]">
       <Content />
     </div>
 
-    <p class="mt-[4.5em]">
-      Next: <a href={`/portfolio/${next.id}`}>{next.data.title}</a>
+    <p class="project-next">
+      <span class="project-next__label">Next project</span>
+      <a href={`/portfolio/${next.id}`}>
+        {next.data.title}
+      </a>
     </p>
   </article>
 </Base>
+
+{project.id === 'vio' && (
+  <template id="vio-grid-loop-template">
+    <video
+      class="vio-grid-loop"
+      src="/videos/vio/vio-grid-push-loop.mp4"
+      autoplay
+      loop
+      muted
+      playsinline
+      aria-label="Vio automatic savings campaign animation"
+    ></video>
+  </template>
+)}
+
+{project.id === 'vio' && (
+  <template id="vio-tov-slideshow-template">
+    <div
+      class="image-carousel vio-tov-slideshow"
+      role="region"
+      aria-label="Vio tone of voice guidelines"
+    >
+      <div class="image-carousel__viewport">
+        <div class="image-carousel__track">
+          <figure class="image-carousel__slide">
+            <img src="/images/vio/tov/slide-01.webp" alt="Vio tone of voice brand guidelines cover" />
+          </figure>
+          <figure class="image-carousel__slide" hidden>
+            <img src="/images/vio/tov/slide-02.webp" alt="Why the Vio tone of voice guide exists" />
+          </figure>
+          <figure class="image-carousel__slide" hidden>
+            <img src="/images/vio/tov/slide-03.webp" alt="Vio tone of voice approach" />
+          </figure>
+          <figure class="image-carousel__slide" hidden>
+            <img src="/images/vio/tov/slide-04.webp" alt="Vio distinctiveness principle: we are insiders" />
+          </figure>
+          <figure class="image-carousel__slide" hidden>
+            <img src="/images/vio/tov/slide-05.webp" alt="Vio elephant qualities" />
+          </figure>
+          <figure class="image-carousel__slide" hidden>
+            <img src="/images/vio/tov/slide-06.webp" alt="Vio tone of voice in practice" />
+          </figure>
+          <figure class="image-carousel__slide" hidden>
+            <img src="/images/vio/tov/slide-07.webp" alt="Vio tone principles" />
+          </figure>
+          <figure class="image-carousel__slide" hidden>
+            <img src="/images/vio/tov/slide-08.webp" alt="Vio shared wisdom principle" />
+          </figure>
+          <figure class="image-carousel__slide" hidden>
+            <img src="/images/vio/tov/slide-09.webp" alt="Vio independent wit principle" />
+          </figure>
+          <figure class="image-carousel__slide" hidden>
+            <img src="/images/vio/tov/slide-10.webp" alt="Vio grounded clarity principle" />
+          </figure>
+          <figure class="image-carousel__slide" hidden>
+            <img src="/images/vio/tov/slide-11.webp" alt="Vio protective warmth principle" />
+          </figure>
+        </div>
+      </div>
+    </div>
+  </template>
+)}
+
+{project.id === 'vio' && (
+  <template id="vio-casino-loop-template">
+    <video
+      class="vio-casino-loop"
+      src="/videos/vio/vio-monks-vegas-price-insights-16x9.webm"
+      autoplay
+      loop
+      muted
+      playsinline
+      aria-label="Vio Vegas price insights campaign animation"
+    ></video>
+  </template>
+)}
+
+{project.id === 'vio' && (
+  <script>
+    const template = document.querySelector('#vio-grid-loop-template');
+    const staticVisual = document.querySelector(
+      '.project-page img[alt^="Vio billboard"]',
+    );
+    const visualPair = staticVisual?.closest('p');
+    const video = template?.content.firstElementChild;
+
+    if (visualPair instanceof HTMLParagraphElement && video instanceof HTMLVideoElement) {
+      visualPair.classList.add('vio-visual-pair');
+      visualPair.append(video);
+      video.load();
+      video.play().catch(() => undefined);
+    }
+
+    const givingVoiceHeading = document.getElementById('giving-vio-its-voice');
+    const tovTemplate = document.querySelector('#vio-tov-slideshow-template');
+    const tovSlides = tovTemplate?.content.firstElementChild;
+
+    if (givingVoiceHeading instanceof HTMLElement && tovSlides instanceof HTMLElement) {
+      let node = givingVoiceHeading.nextElementSibling;
+      let lastParagraph = null;
+
+      while (node && !node.matches('h2')) {
+        if (node instanceof HTMLParagraphElement) lastParagraph = node;
+        node = node.nextElementSibling;
+      }
+
+      if (lastParagraph instanceof HTMLParagraphElement) {
+        lastParagraph.after(tovSlides.cloneNode(true));
+
+        const slideshow = lastParagraph.nextElementSibling;
+        if (slideshow instanceof HTMLElement) {
+          const viewport = slideshow.querySelector('.image-carousel__viewport');
+          const track = slideshow.querySelector('.image-carousel__track');
+          const slides = Array.from(slideshow.querySelectorAll('.image-carousel__slide'));
+          const previous = slideshow.querySelector('.image-carousel__button');
+          const counter = slideshow.querySelector('.image-carousel__counter');
+          const next = slideshow.querySelectorAll('.image-carousel__button')[1];
+
+          if (track instanceof HTMLElement && slides.length) {
+            slideshow.classList.add('vio-tov-continuous');
+            const group = document.createElement('div');
+            group.className = 'vio-tov-group';
+            slides.forEach((slide) => {
+              slide.removeAttribute('hidden');
+              group.append(slide);
+            });
+            const duplicate = group.cloneNode(true);
+            if (duplicate instanceof HTMLElement) duplicate.setAttribute('aria-hidden', 'true');
+            track.replaceChildren(group, duplicate);
+            const resumeRolling = () => {
+              track.style.animationPlayState = 'running';
+            };
+            track.addEventListener('pointerdown', (event) => {
+              track.style.animationPlayState = 'paused';
+              track.setPointerCapture(event.pointerId);
+            });
+            track.addEventListener('pointerup', resumeRolling);
+            track.addEventListener('pointercancel', resumeRolling);
+            track.addEventListener('lostpointercapture', resumeRolling);
+            track.addEventListener('dragstart', (event) => event.preventDefault());
+          }
+
+          if (!slideshow.classList.contains('vio-tov-continuous') && viewport instanceof HTMLElement && track instanceof HTMLElement && slides.length) {
+            let current = 0;
+            let timer;
+            let transitioning = false;
+            let finishTimer;
+
+            const updateCounter = () => {
+              if (counter) counter.textContent = `${current + 1} / ${slides.length}`;
+            };
+
+            const updateCarousel = () => {
+              const slideWidth = slides[0].getBoundingClientRect().width;
+              const gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+              const step = slideWidth + gap;
+              const midpoint = Math.floor(slides.length / 2);
+
+              slides.forEach((slide, slideIndex) => {
+                const delta = slideIndex - current;
+                const relative = ((delta + midpoint) % slides.length + slides.length) % slides.length - midpoint;
+                slide.hidden = false;
+                slide.style.setProperty('--tov-offset', `${relative * step}px`);
+                slide.classList.toggle('is-active', relative === 0);
+                slide.classList.toggle('is-previous', relative === -1);
+                slide.classList.toggle('is-next', relative === 1);
+                slide.classList.toggle('is-hidden', Math.abs(relative) > 1);
+                slide.setAttribute('aria-hidden', String(relative !== 0));
+              });
+            };
+
+            const move = (direction) => {
+              if (transitioning) return;
+
+              transitioning = true;
+              window.clearTimeout(finishTimer);
+              current = (current + direction + slides.length) % slides.length;
+              updateCounter();
+              updateCarousel();
+              finishTimer = window.setTimeout(() => {
+                transitioning = false;
+              }, 1150);
+            };
+
+            const stop = () => window.clearInterval(timer);
+            const start = () => {
+              stop();
+              timer = window.setInterval(() => move(1), 4000);
+            };
+
+            previous?.addEventListener('click', () => move(-1));
+            next?.addEventListener('click', () => move(1));
+            window.addEventListener('resize', updateCarousel);
+            updateCarousel();
+            updateCounter();
+            start();
+          }
+        }
+      }
+    }
+
+    const casinoTemplate = document.querySelector('#vio-casino-loop-template');
+    const casinoImage = document.querySelector(
+      '.project-page img[alt^="Vio ad: “Don’t get played"]',
+    );
+    const casinoVideo = casinoTemplate?.content.firstElementChild;
+    const casinoPair = casinoImage?.closest('p');
+
+    if (
+      casinoImage instanceof HTMLImageElement &&
+      casinoVideo instanceof HTMLVideoElement &&
+      casinoPair instanceof HTMLParagraphElement
+    ) {
+      casinoPair.classList.add('vio-visual-pair', 'vio-visual-pair--insider');
+      casinoImage.replaceWith(casinoVideo);
+      casinoVideo.load();
+      casinoVideo.play().catch(() => undefined);
+    }
+  </script>
+)}
+
+{project.id === 'dyson' && (
+  <script>
+    const makeCarousel = (markerSelector, label, className, videoSources = []) => {
+      const marker = document.querySelector(markerSelector);
+      const imageParagraph = marker?.nextElementSibling;
+
+      if (!(marker instanceof HTMLElement)) {
+        return null;
+      }
+
+      const images = imageParagraph instanceof HTMLParagraphElement
+        ? Array.from(imageParagraph.querySelectorAll('img'))
+        : [];
+      if (!videoSources.length && !images.length) return null;
+
+      const carousel = document.createElement('div');
+      carousel.className = `image-carousel ${className}`;
+      carousel.setAttribute('role', 'region');
+      carousel.setAttribute('aria-label', label);
+
+      const viewport = document.createElement('div');
+      viewport.className = 'image-carousel__viewport';
+
+      const slides = videoSources.length
+        ? videoSources.map(({ src, alt }, index) => {
+            const video = document.createElement('video');
+            video.src = src;
+            video.autoplay = index === 0;
+            video.loop = true;
+            video.muted = true;
+            video.playsInline = true;
+            video.preload = 'metadata';
+            video.setAttribute('aria-label', alt);
+
+            const slide = document.createElement('figure');
+            slide.className = 'image-carousel__slide';
+            slide.hidden = index !== 0;
+            slide.append(video);
+            viewport.append(slide);
+            return slide;
+          })
+        : images.map((image, index) => {
+            const slide = document.createElement('figure');
+            slide.className = 'image-carousel__slide';
+            slide.hidden = index !== 0;
+            slide.append(image);
+            viewport.append(slide);
+            return slide;
+          });
+
+      const controls = document.createElement('div');
+      controls.className = 'image-carousel__controls';
+
+      const previous = document.createElement('button');
+      previous.type = 'button';
+      previous.className = 'image-carousel__button';
+      previous.setAttribute('aria-label', `Previous ${label.toLowerCase()}`);
+      previous.textContent = '←';
+
+      const counter = document.createElement('span');
+      counter.className = 'image-carousel__counter';
+      counter.setAttribute('aria-live', 'polite');
+
+      const pause = document.createElement('button');
+      pause.type = 'button';
+      pause.className = 'image-carousel__pause';
+      pause.setAttribute('aria-label', `Pause ${label.toLowerCase()} animation`);
+      pause.textContent = 'Pause';
+
+      const next = document.createElement('button');
+      next.type = 'button';
+      next.className = 'image-carousel__button';
+      next.setAttribute('aria-label', `Next ${label.toLowerCase()}`);
+      next.textContent = '→';
+
+      controls.append(previous, counter, pause, next);
+      carousel.append(viewport, controls);
+      marker.replaceWith(carousel);
+      if (imageParagraph instanceof HTMLParagraphElement) imageParagraph.remove();
+
+      let current = 0;
+      let timer;
+      let paused = false;
+
+      const update = (index) => {
+        current = (index + slides.length) % slides.length;
+        slides.forEach((slide, slideIndex) => {
+          const isActive = slideIndex === current;
+          slide.hidden = !isActive;
+          const video = slide.querySelector('video');
+          if (video instanceof HTMLVideoElement) {
+            if (isActive) video.play().catch(() => undefined);
+            else video.pause();
+          }
+        });
+        counter.textContent = `${current + 1} / ${slides.length}`;
+      };
+
+      const stop = () => window.clearInterval(timer);
+      const start = () => {
+        stop();
+        if (!paused) timer = window.setInterval(() => update(current + 1), 4500);
+      };
+
+      previous.addEventListener('click', () => update(current - 1));
+      next.addEventListener('click', () => update(current + 1));
+      pause.addEventListener('click', () => {
+        paused = !paused;
+        pause.textContent = paused ? 'Play' : 'Pause';
+        pause.setAttribute(
+          'aria-label',
+          `${paused ? 'Play' : 'Pause'} ${label.toLowerCase()} animation`,
+        );
+        start();
+      });
+      const continuousCarousel =
+        carousel.classList.contains('social-carousel') ||
+        carousel.classList.contains('project-gallery-carousel--journeys') ||
+        carousel.classList.contains('project-gallery-carousel--mea');
+
+      if (!continuousCarousel) {
+        carousel.addEventListener('mouseenter', stop);
+        carousel.addEventListener('mouseleave', start);
+      }
+      if (carousel.classList.contains('project-gallery-carousel')) {
+        carousel.classList.add('dyson-rolling-carousel');
+        const track = document.createElement('div');
+        track.className = 'dyson-rolling-track';
+        const group = document.createElement('div');
+        group.className = 'dyson-rolling-group';
+        slides.forEach((slide) => {
+          slide.hidden = false;
+          group.append(slide);
+        });
+        const duplicate = group.cloneNode(true);
+        if (duplicate instanceof HTMLElement) duplicate.setAttribute('aria-hidden', 'true');
+        track.append(group, duplicate);
+        viewport.replaceChildren(track);
+        controls.remove();
+        track.addEventListener('pointerdown', (event) => {
+          track.style.animationPlayState = 'paused';
+          track.setPointerCapture(event.pointerId);
+        });
+        const resume = () => { track.style.animationPlayState = 'running'; };
+        track.addEventListener('pointerup', resume);
+        track.addEventListener('pointercancel', resume);
+        track.addEventListener('lostpointercapture', resume);
+        track.addEventListener('dragstart', (event) => event.preventDefault());
+        return carousel;
+      }
+      update(0);
+      start();
+      return carousel;
+    };
+
+    makeCarousel(
+      '[data-social-carousel-marker]',
+      'Dyson social media concepts',
+      'social-carousel',
+      [
+        { src: '/videos/dyson/social-media/reel-01.mp4', alt: 'Dyson social media reel 1' },
+        { src: '/videos/dyson/social-media/reel-02.mp4', alt: 'Dyson social media reel 2' },
+        { src: '/videos/dyson/social-media/reel-03.mp4', alt: 'Dyson social media reel 3' },
+        { src: '/videos/dyson/social-media/reel-04.mp4', alt: 'Dyson social media reel 4' },
+      ],
+    );
+    makeCarousel(
+      '[data-image-carousel-marker="journeys"]',
+      'Journeys of Time visuals',
+      'project-gallery-carousel project-gallery-carousel--journeys',
+    );
+    makeCarousel(
+      '[data-image-carousel-marker="mea"]',
+      'MEA Women of Firsts visuals',
+      'project-gallery-carousel project-gallery-carousel--mea',
+    );
+    const journeysFilm = Array.from(document.querySelectorAll('.project-page--dyson .project-clip')).find((figure) => figure.textContent.includes('Journeys of Time – Digital journey'));
+    const project = document.querySelector('.project-page--dyson .project');
+
+    const makeSection = (headingId, className, stopPredicate) => {
+      const heading = document.getElementById(headingId);
+      if (!(heading instanceof HTMLElement) || !project) return;
+
+      const section = document.createElement('section');
+      section.className = `project-section ${className}`;
+      heading.parentElement?.insertBefore(section, heading);
+
+      const nodes = [];
+      let node = heading;
+      while (node) {
+        const next = node.nextElementSibling;
+        nodes.push(node);
+        section.append(node);
+        if (stopPredicate(node)) break;
+        node = next;
+      }
+
+      const copy = document.createElement('div');
+      copy.className = 'project-section__copy';
+      const visual = nodes.find((item) =>
+        item.matches('.image-carousel, p:has(> img)'),
+      );
+
+      nodes.forEach((item) => {
+        if (item !== visual) copy.append(item);
+      });
+      section.replaceChildren(copy, visual);
+    };
+
+    makeSection(
+      'journeys-of-time',
+      'project-section--journeys',
+      (node) => node.matches('.project-gallery-carousel--journeys'),
+    );
+    if (journeysFilm) {
+      journeysFilm.classList.add('journeys-hero');
+      document.querySelector('.project-gallery-carousel--journeys')?.before(journeysFilm);
+    }
+
+    makeSection(
+      'dyson-social-media',
+      'project-section--social',
+      (node) => node.matches('.social-carousel'),
+    );
+    makeSection(
+      'mea-women-of-firsts',
+      'project-section--mea',
+      (node) => node.matches('.project-gallery-carousel--mea'),
+    );
+    const meaScroll = document.createElement('figure');
+    document.querySelector('.project-gallery-carousel--mea')?.remove();
+    meaScroll.className = 'mea-page-scroll';
+    const meaScrollImage = document.createElement('video');
+    meaScrollImage.src = '/videos/dyson/women-of-firsts-scroll.mp4';
+    meaScrollImage.autoplay = true;
+    meaScrollImage.loop = true;
+    meaScrollImage.muted = true;
+    meaScrollImage.playsInline = true;
+    meaScrollImage.setAttribute('aria-label', 'Slow scrolling preview of the Dyson Women of Firsts campaign webpage');
+    meaScroll.append(meaScrollImage);
+    document.querySelector('.project-section--mea')?.append(meaScroll);
+    makeSection(
+      'sultans-of-the-air',
+      'project-section--sultans',
+      (node) => node.matches('p:has(> img)'),
+    );
+    if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      document.querySelectorAll('.project-section--sultans > p > img').forEach((image) => {
+        image.classList.add('sultans-scroll-reveal');
+        revealObserver.observe(image);
+      });
+    }
+
+  </script>
+)}
+
+{project.id === 'citizenm' && (
+  <script>
+    const makeMarquee = (marquee) => {
+      if (!(marquee instanceof HTMLElement) || marquee.children.length === 0) return;
+
+      const firstGroup = document.createElement('div');
+      firstGroup.className = 'citizenm-world-group';
+
+      Array.from(marquee.children).forEach((item) => firstGroup.append(item));
+
+      const secondGroup = firstGroup.cloneNode(true);
+      if (secondGroup instanceof HTMLElement) secondGroup.setAttribute('aria-hidden', 'true');
+
+      const track = document.createElement('div');
+      track.className = 'citizenm-world-track';
+      track.append(firstGroup, secondGroup);
+      marquee.replaceChildren(track);
+    };
+
+    makeMarquee(document.querySelector('.citizenm-world-assets'));
+
+    const socialHeading = document.getElementById('social-media-copy');
+    const socialParagraph = socialHeading?.nextElementSibling;
+    if (socialHeading instanceof HTMLElement && socialParagraph instanceof HTMLParagraphElement) {
+      const images = Array.from(socialParagraph.querySelectorAll('img'));
+      const socialAssets = document.createElement('div');
+      socialAssets.className = 'citizenm-social-assets';
+      socialAssets.setAttribute('role', 'region');
+      socialAssets.setAttribute('aria-label', 'citizenM social media copy visuals');
+
+      images.forEach((image) => {
+        const figure = document.createElement('figure');
+        figure.append(image);
+        socialAssets.append(figure);
+      });
+
+      socialParagraph.replaceWith(socialAssets);
+      makeMarquee(socialAssets);
+    }
+  </script>
+)}
+
+{project.id === 'otrium' && (
+  <script>
+    const makeOtriumCarousel = (headingId, label, markerName) => {
+      const heading = headingId ? document.getElementById(headingId) : null;
+      const marker = markerName
+        ? document.querySelector(`[data-otrium-carousel="${markerName}"]`)
+        : null;
+      const anchor = heading ?? marker;
+      if (!(anchor instanceof HTMLElement)) return;
+
+      const imageParagraphs = [];
+      let node = anchor.nextElementSibling;
+      while (node && !node.matches('h2')) {
+        if (node.matches('p:has(> img)')) imageParagraphs.push(node);
+        node = node.nextElementSibling;
+      }
+
+      const images = imageParagraphs.flatMap((paragraph) =>
+        Array.from(paragraph.querySelectorAll('img')),
+      );
+      if (images.length < 2 || !imageParagraphs.length) return;
+
+      const carousel = document.createElement('div');
+      carousel.className = 'image-carousel otrium-carousel';
+      carousel.setAttribute('role', 'region');
+      carousel.setAttribute('aria-label', label);
+
+      const viewport = document.createElement('div');
+      viewport.className = 'image-carousel__viewport';
+
+      const slides = images.map((image, index) => {
+        const slide = document.createElement('figure');
+        slide.className = 'image-carousel__slide';
+        slide.hidden = index !== 0;
+        slide.append(image);
+        viewport.append(slide);
+        return slide;
+      });
+
+      if (images.length > 1) {
+        carousel.classList.add('otrium-social-rolling');
+        const track = document.createElement('div');
+        track.className = 'otrium-social-track';
+        const group = document.createElement('div');
+        group.className = 'otrium-social-group';
+        slides.forEach((slide) => { slide.hidden = false; group.append(slide); });
+        const duplicate = group.cloneNode(true);
+        duplicate.setAttribute('aria-hidden', 'true');
+        track.append(group, duplicate);
+        viewport.append(track);
+        carousel.append(viewport);
+        imageParagraphs[0].replaceWith(carousel);
+        imageParagraphs.slice(1).forEach((paragraph) => paragraph.remove());
+        return;
+      }
+
+      const controls = document.createElement('div');
+      controls.className = 'image-carousel__controls';
+
+      const previous = document.createElement('button');
+      previous.type = 'button';
+      previous.className = 'image-carousel__button';
+      previous.setAttribute('aria-label', `Previous ${label.toLowerCase()}`);
+      previous.textContent = '←';
+
+      const counter = document.createElement('span');
+      counter.className = 'image-carousel__counter';
+      counter.setAttribute('aria-live', 'polite');
+
+      const next = document.createElement('button');
+      next.type = 'button';
+      next.className = 'image-carousel__button';
+      next.setAttribute('aria-label', `Next ${label.toLowerCase()}`);
+      next.textContent = '→';
+
+      controls.append(previous, counter, next);
+      carousel.append(viewport, controls);
+      const insertionPoint = anchor === marker ? anchor : imageParagraphs[0];
+      insertionPoint.replaceWith(carousel);
+      imageParagraphs.forEach((paragraph) => {
+        if (paragraph !== insertionPoint) paragraph.remove();
+      });
+
+      let current = 0;
+      let timer;
+
+      const update = (index) => {
+        current = (index + slides.length) % slides.length;
+        slides.forEach((slide, slideIndex) => {
+          slide.hidden = slideIndex !== current;
+        });
+        counter.textContent = `${current + 1} / ${slides.length}`;
+      };
+      const stop = () => window.clearInterval(timer);
+      const start = () => {
+        stop();
+        timer = window.setInterval(() => update(current + 1), 4000);
+      };
+
+      previous.addEventListener('click', () => update(current - 1));
+      next.addEventListener('click', () => update(current + 1));
+      carousel.addEventListener('mouseenter', stop);
+      carousel.addEventListener('mouseleave', start);
+      update(0);
+      start();
+    };
+
+    const youMarker = document.querySelector('[data-otrium-carousel="you"]');
+    if (youMarker) {
+      const collage = document.createElement('div');
+      collage.className = 'otrium-festive-collage otrium-you-collage';
+      let node = youMarker.nextElementSibling;
+      while (node && !node.matches('h2')) {
+        const following = node.nextElementSibling;
+        if (node.matches('p:has(> img)')) {
+          node.querySelectorAll('img').forEach((image) => {
+            const figure = document.createElement('figure');
+            figure.append(image);
+            collage.append(figure);
+          });
+          node.remove();
+        }
+        node = following;
+      }
+      youMarker.replaceWith(collage);
+    }
+    makeOtriumCarousel('b2b-copy', 'Otrium B2B copy examples');
+    makeOtriumCarousel('social-copy', 'Otrium social copy examples');
+    const festiveHeading = document.getElementById('festive-campaign-fw21');
+    const festiveCollage = document.createElement('div');
+    festiveCollage.className = 'otrium-festive-collage';
+    let festiveNode = festiveHeading?.nextElementSibling;
+    let insertedCollage = false;
+    while (festiveNode && !festiveNode.matches('h2')) {
+      const following = festiveNode.nextElementSibling;
+      if (festiveNode.matches('p:has(> img)')) {
+        if (!insertedCollage) { festiveNode.before(festiveCollage); insertedCollage = true; }
+        festiveNode.querySelectorAll('img').forEach((image) => {
+          const figure = document.createElement('figure');
+          figure.append(image);
+          festiveCollage.append(figure);
+        });
+        festiveNode.remove();
+      }
+      festiveNode = following;
+    }
+    makeOtriumCarousel('brand-specific-alexander-mcqueen', 'Otrium Alexander McQueen visuals');
+    if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const festiveObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            festiveObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: .08 });
+      document.querySelectorAll('.otrium-festive-collage > figure').forEach((figure) => {
+        figure.classList.add('festive-float');
+        festiveObserver.observe(figure);
+      });
+    }
+
+  </script>
+)}
+
+{project.id === 'nr-magazine' && (
+  <script>
+    const project = document.querySelector('.project-page--nr-magazine .project');
+    const imageParagraphs = project
+      ? Array.from(project.querySelectorAll('p:has(> img)'))
+      : [];
+    const images = imageParagraphs.flatMap((paragraph) =>
+      Array.from(paragraph.querySelectorAll('img')),
+    );
+
+    if (images.length > 1 && imageParagraphs.length) {
+      const carousel = document.createElement('div');
+      carousel.className = 'image-carousel nr-magazine-carousel';
+      carousel.setAttribute('role', 'region');
+      carousel.setAttribute('aria-label', 'NR Magazine visuals');
+
+      const viewport = document.createElement('div');
+      viewport.className = 'image-carousel__viewport';
+
+      const slides = images.map((image, index) => {
+        const slide = document.createElement('figure');
+        slide.className = 'image-carousel__slide';
+        slide.hidden = index !== 0;
+        slide.append(image);
+        viewport.append(slide);
+        return slide;
+      });
+
+      const controls = document.createElement('div');
+      controls.className = 'image-carousel__controls';
+
+      const previous = document.createElement('button');
+      previous.type = 'button';
+      previous.className = 'image-carousel__button';
+      previous.setAttribute('aria-label', 'Previous NR Magazine visual');
+      previous.textContent = '←';
+
+      const counter = document.createElement('span');
+      counter.className = 'image-carousel__counter';
+      counter.setAttribute('aria-live', 'polite');
+
+      const next = document.createElement('button');
+      next.type = 'button';
+      next.className = 'image-carousel__button';
+      next.setAttribute('aria-label', 'Next NR Magazine visual');
+      next.textContent = '→';
+
+      controls.append(previous, counter, next);
+      carousel.append(viewport, controls);
+      imageParagraphs[0].replaceWith(carousel);
+      imageParagraphs.slice(1).forEach((paragraph) => paragraph.remove());
+
+      let current = 0;
+      let timer;
+
+      const update = (index) => {
+        current = (index + slides.length) % slides.length;
+        slides.forEach((slide, slideIndex) => {
+          slide.hidden = slideIndex !== current;
+        });
+        counter.textContent = `${current + 1} / ${slides.length}`;
+      };
+      const stop = () => window.clearInterval(timer);
+      const start = () => {
+        stop();
+        timer = window.setInterval(() => update(current + 1), 4000);
+      };
+
+      previous.addEventListener('click', () => update(current - 1));
+      next.addEventListener('click', () => update(current + 1));
+      carousel.addEventListener('mouseenter', stop);
+      carousel.addEventListener('mouseleave', start);
+      update(0);
+      start();
+    }
+  </script>
+)}

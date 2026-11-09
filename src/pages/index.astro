@@ -1,5 +1,6 @@
 ---
-import { getEntry, render } from 'astro:content';
+import { getCollection, getEntry, render } from 'astro:content';
+import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import FlyingPhotos from '../components/FlyingPhotos.astro';
@@ -8,56 +9,45 @@ import { getEssays } from '../lib/essays';
 const home = await getEntry('home', 'home');
 if (!home) throw new Error('Missing src/content/home.md');
 const { Content: Intro } = await render(home);
-const { email, links, handle, experience } = home.data;
+const { likes } = home.data;
 
 const essays = (await getEssays()).sort((a, b) => a.data.order - b.data.order);
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
 ---
 
 <Base>
   <SiteHeader />
 
-  <div class="grid grid-cols-3 gap-x-12 max-md:grid-cols-1 max-md:gap-y-40">
+  <div class="home-columns grid grid-cols-4 gap-x-12 max-md:grid-cols-1 max-md:gap-y-40">
     <section>
       <h2 class="label">Nice to meet you</h2>
-      <div class="copy mt-[1.5em]">
+      <div class="copy mt-[0.75em]">
         <Intro />
-        <p>
-          <a href={`mailto:${email}`}>Get in touch.</a><br />
-          {
-            links.map((link) => (
-              <>
-                <a href={link.url} target="_blank" rel="noopener">
-                  {link.label}
-                </a>
-                <br />
-              </>
-            ))
-          }
-          <a href={handle.url} target="_blank" rel="noopener">{handle.label}</a> everywhere.
-        </p>
       </div>
     </section>
 
     <section>
-      <h2 class="label">What I’ve been up to</h2>
-      <div class="copy mt-[1.5em]">
-        {
-          experience.map((job) => (
-            <p>
-              {job.role} |<br />
-              {job.dates}
-              <br />
-              {job.company}
-            </p>
-          ))
-        }
-      </div>
-      <hr />
+      <h2 class="label"><a class="project-preview-link" href="/portfolio">Recent work
+        <span class="project-hover-preview" aria-hidden="true">
+          <video src="/videos/portfolio-montage.mp4" autoplay loop muted playsinline preload="metadata"></video>
+          <span>Selected work</span>
+        </span>
+      </a></h2>
+      <ul class="mt-[0.75em]">
+        {projects.map((project) => (
+          <li><a class="project-preview-link" href={`/portfolio/${project.id}/`}>
+            {project.data.title}
+            <span class="project-hover-preview" aria-hidden="true">
+              {project.id === 'citizenm' ? <img src="/images/citizenm/november-sale-hero.jpg" alt="" /> : <Image src={project.data.cover} alt="" width={840} />}
+              <span class="preview-role">{project.data.role}<br />{project.data.year}</span>
+            </span>
+          </a></li>
+        ))}
+      </ul>
     </section>
-
-    <section id="writing">
-      <h2 class="label">Writing</h2>
-      <ul class="mt-[1.5em]">
+    <section>
+      <h2 id="writing" class="label">Writing</h2>
+      <ul class="mt-[0.75em]">
         {
           essays.map((essay) => (
             <li>
@@ -66,9 +56,29 @@ const essays = (await getEssays()).sort((a, b) => a.data.order - b.data.order);
           ))
         }
       </ul>
-      <p class="mt-[1.5em] font-bold"><a href="/portfolio">Portfolio</a></p>
+    </section>
+
+    <section>
+      <h2 class="label">What I like</h2>
+      <ul class="mt-[0.75em]">
+        {likes.map((like) => <li>{like}</li>)}
+      </ul>
     </section>
   </div>
 
   <FlyingPhotos />
 </Base>
+
+<style>
+  @media (min-width: 769px) { .home-columns { grid-template-columns: 1fr .65fr 1.2fr 1fr; } }
+  .project-preview-link { position: relative; display: inline-block; }
+  .project-hover-preview { position: fixed; top: 25vh; left: 42vw; width: min(45vw, 40rem); background: transparent; padding: 0; z-index: 100; pointer-events: none; opacity: 0; visibility: hidden; transform: translateY(.5rem); transition: opacity .18s, transform .18s, visibility .18s; }
+  .project-hover-preview img { width: 100%; height: auto; max-height: 26rem; object-fit: contain; }
+  .project-hover-preview video { display: block; width: 100%; height: auto; max-height: 26rem; object-fit: contain; }
+  .project-hover-preview > span { display: block; position: absolute; bottom: 0; left: 0; right: 0; padding: 2rem 1rem 1rem; color: white; background: linear-gradient(transparent, #0009); font-size: 1rem; line-height: 1.4; text-align: left; }
+  @media (hover: hover) {
+    .project-preview-link:hover .project-hover-preview,
+    .project-preview-link:focus-visible .project-hover-preview { opacity: 1; visibility: visible; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) { .project-hover-preview { transition: none; } }
+</style>
