@@ -1,7 +1,6 @@
 ---
 import { getCollection, getEntry, render } from 'astro:content';
 import { Image } from 'astro:assets';
-import nrHover from '../assets/projects/nr-magazine/nr-17-4.jpg';
 import Base from '../layouts/Base.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import FlyingPhotos from '../components/FlyingPhotos.astro';
@@ -50,7 +49,7 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
               ) : project.id === 'otrium' ? (
                 <Image src={project.data.cover} alt="" width={840} height={473} fit="cover" />
               ) : project.id === 'nr-magazine' ? (
-                <Image src={nrHover} alt="" width={840} height={473} fit="cover" />
+                <img class="nr-cover-preview" src="/images/nr-magazine/02-NR17-Cover-VTSS-shot-by-Erika-Kamano-min-scaled.jpg" alt="" width="840" height="473" />
               ) : (
                 <Image src={project.data.cover} alt="" width={840} />
               )}
@@ -90,6 +89,7 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
   .project-hover-preview { position: fixed; top: 25vh; left: 42vw; width: min(45vw, 40rem); background: transparent; padding: 0; z-index: 100; pointer-events: none; opacity: 0; visibility: hidden; transform: translateY(.5rem); transition: opacity .18s, transform .18s, visibility .18s; }
   .project-hover-preview img { width: 100%; height: auto; max-height: 26rem; object-fit: contain; }
   .project-hover-preview video { display: block; width: 100%; height: auto; max-height: 26rem; object-fit: contain; }
+  .project-hover-preview img.nr-cover-preview { aspect-ratio: 16 / 9; object-fit: cover; object-position: center 35%; }
   .project-hover-preview video.vio-logo-preview { aspect-ratio: 16 / 9; object-fit: cover; }
   .project-hover-preview > span { display: block; position: absolute; bottom: 0; left: 0; right: 0; padding: 2rem 1rem 1rem; color: white; background: linear-gradient(transparent, #0009); font-size: 1rem; line-height: 1.4; text-align: left; }
   @media (hover: hover) {
