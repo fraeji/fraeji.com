@@ -12,20 +12,20 @@
 }
 
 /*
- * Cargo scales the whole site with the root font size: on desktop it tracks the
- * window height, on phones the width. Everything below is sized in rem so the
- * proportions match the old site at any size.
+ * Keep the Cargo proportions through rem sizing, while respecting browser zoom
+ * and the reader’s preferred default text size. Viewport-only font sizes cancel
+ * out browser zoom and prevent readers from enlarging the text.
  */
 @layer base {
   html {
-    font-size: min(1.44vh, 1.25vw);
+    font-size: 70%;
     -webkit-text-size-adjust: 100%;
     --body-size: 1.55rem;
   }
 
   @media (max-width: 767px) {
     html {
-      font-size: 3.136vw;
+      font-size: 76.5%;
       --body-size: 1.75rem;
     }
   }
@@ -341,8 +341,19 @@
     margin-top: 0;
   }
 
+  .project-page--vio #save-money-while-you-sleep,
+  .project-page--vio #save-money-while-you-sleep + p {
+    width: min(100%, 42rem);
+    margin-inline: auto;
+  }
+
   .project-page--vio .vio-tov-continuous + h2 {
-    margin-top: 1.5em;
+    margin-top: 3em;
+  }
+
+  .project-page--vio #save-money-while-you-sleep + p {
+    margin-top: 1.25em;
+    margin-bottom: 3em;
   }
 
   .project-page--dyson .dyson-vis-nav-copy {
