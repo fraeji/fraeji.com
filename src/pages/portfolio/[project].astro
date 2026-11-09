@@ -561,6 +561,18 @@ const { title, role, year, summary, link } = project.data;
       'project-section--sultans',
       (node) => node.matches('p:has(> img)'),
     );
+    const sultansGallery = document.querySelector('.project-section--sultans > p:has(> img)');
+    if (sultansGallery instanceof HTMLParagraphElement) {
+      const images = Array.from(sultansGallery.querySelectorAll('img'));
+      const columns = [0, 1].map(() => {
+        const column = document.createElement('span');
+        column.className = 'sultans-gallery__column';
+        return column;
+      });
+      images.forEach((image, index) => columns[index % 2].append(image));
+      sultansGallery.classList.add('sultans-gallery');
+      sultansGallery.replaceChildren(...columns);
+    }
     if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
@@ -570,7 +582,7 @@ const { title, role, year, summary, link } = project.data;
           }
         });
       }, { threshold: 0.12 });
-      document.querySelectorAll('.project-section--sultans > p > img').forEach((image) => {
+      document.querySelectorAll('.project-section--sultans > p.sultans-gallery img').forEach((image) => {
         image.classList.add('sultans-scroll-reveal');
         revealObserver.observe(image);
       });

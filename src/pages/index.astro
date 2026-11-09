@@ -43,6 +43,8 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
             <span class="project-hover-preview" aria-hidden="true">
               {project.id === 'citizenm' ? (
                 <img src="/images/citizenm/november-sale-hero.jpg" alt="" />
+              ) : project.id === 'dyson' ? (
+                <img src="/images/dyson-british-summer-hero.jpg" alt="" />
               ) : project.id === 'nr-magazine' ? (
                 <Image src={nrHover} alt="" width={840} height={473} fit="cover" />
               ) : (
