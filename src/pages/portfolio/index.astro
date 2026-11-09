@@ -25,7 +25,7 @@ const logoAssets: Record<string, { src: string; alt: string }> = {
 };
 const previews: Record<string, string> = {
   vio: '/videos/vio/logo-animation.mp4',
-  dyson: '/videos/dyson/dyson-journeys-of-time.mp4',
+  dyson: '/videos/dyson/dyson-portfolio-loop.mp4',
   citizenm: '/videos/citizenm/rome-artist-files.mp4',
 };
 
@@ -216,9 +216,6 @@ const previews: Record<string, string> = {
     transition: transform 400ms ease;
   }
   .portfolio-logo:hover .portfolio-logo__mark > * { transform: scale(1.025); }
-  .portfolio-logo--dyson .portfolio-logo__mark video {
-    object-fit: contain;
-  }
   .portfolio-logo--dyson:hover .portfolio-logo__mark > * {
     transform: none;
   }
