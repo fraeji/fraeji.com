@@ -1271,7 +1271,7 @@
 /* Shared case-study header: title left, project details right. */
 .project-page[class] .project-heading {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 3rem;
   align-items: start;
   width: min(100%, 60rem);
@@ -1288,7 +1288,7 @@
   grid-column: 2;
   grid-row: 1;
   margin: .25em 0 0;
-  text-align: right;
+  text-align: left;
 }
 @media (max-width: 767px) {
   .project-page[class] .project-heading {
@@ -1371,4 +1371,17 @@
 
 .project-page[class] .project-section > .project-section__copy + * {
   margin-top: 0;
+}
+
+
+/* Keep portfolio and case-study titles at the same quieter scale. */
+.portfolio-title,
+.project-page .project-heading > h2 {
+  font-size: 2.8rem;
+}
+@media (max-width: 767px) {
+  .portfolio-title,
+  .project-page .project-heading > h2 {
+    font-size: 2.4rem;
+  }
 }
