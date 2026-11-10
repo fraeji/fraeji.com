@@ -34,8 +34,7 @@ const previews: Record<string, string> = {
 <Base title="Portfolio" description="Selected copywriting, creative direction and editorial work.">
   <SiteHeader linkHome />
 
-  <p class="mb-[1.5em]"><a href="/">← Home</a></p>
-  <h2 class="display text-pink">Recent work</h2>
+  <h2 class="display text-pink portfolio-title">Recent work</h2>
 
   <div class="portfolio-intro" aria-label="Portfolio introduction">
     <p>
@@ -78,9 +77,14 @@ const previews: Record<string, string> = {
     margin-top: clamp(4rem, 8vw, 8rem);
   }
 
+  .portfolio-title {
+    text-align: center;
+  }
+
   .portfolio-intro {
     max-width: 52rem;
-    margin-top: 1.5em;
+    margin: 1.5em auto 0;
+    text-align: center;
     color: var(--color-ink);
     font-size: inherit;
     line-height: inherit;
