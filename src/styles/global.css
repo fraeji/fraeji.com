@@ -1268,11 +1268,37 @@
 .project-page--dyson .social-carousel .image-carousel__viewport { height: min(60vh, 32rem); aspect-ratio: auto; }
 .project-page--dyson .social-carousel .image-carousel__slide video { height: min(60vh, 32rem); width: auto; max-width: 100%; margin-inline: auto; object-fit: contain; }
 
-/* Shared case-study header: navigation, title, then role and date. */
-.project-page[class] .project-heading { display: block; width: min(100%, var(--project-copy-width)); margin-inline: auto; text-align: left; }
-.project-page[class] .project-heading > p:first-child { margin: 0 0 1.5em; }
-.project-page[class] .project-heading > h2 { margin: 0; text-align: left; }
-.project-page[class] .project-heading > p:last-child { margin: .75em 0 0; text-align: left; }
+/* Shared case-study header: title left, project details right. */
+.project-page[class] .project-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
+  gap: 3rem;
+  align-items: start;
+  width: min(100%, 60rem);
+  margin-inline: auto;
+  text-align: left;
+}
+.project-page[class] .project-heading > h2 {
+  grid-column: 1;
+  grid-row: 1;
+  margin: 0;
+  text-align: left;
+}
+.project-page[class] .project-heading > p:last-child {
+  grid-column: 2;
+  grid-row: 1;
+  margin: .25em 0 0;
+  text-align: right;
+}
+@media (max-width: 767px) {
+  .project-page[class] .project-heading {
+    display: block;
+  }
+  .project-page[class] .project-heading > p:last-child {
+    margin: .75em 0 0;
+    text-align: left;
+  }
+}
 .project-page--vio > .vio-title-animation { display: block; width: min(calc(100vw - 8rem), 88rem); max-width: none; aspect-ratio: 16 / 9; object-fit: cover; margin: 3em 0 0; position: relative; left: 50%; transform: translateX(-50%); }
 .project-page--dyson .project-section--social { display: flex; flex-direction: column; gap: 2em; }
 .project-page--dyson .project-section--social .project-section__copy { width: min(100%, 42rem); margin-inline: auto; }
