@@ -1,5 +1,6 @@
 ---
 title: "Your unemployed friend on a Wednesday"
+date: "2026-10"
 order: 0
 series: gardening
 part: 1

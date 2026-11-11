@@ -12,7 +12,11 @@ export async function getStaticPaths() {
 
 const { essay } = Astro.props;
 const { Content } = await render(essay);
-const { title, featured, part } = essay.data;
+const { title, featured, part, date } = essay.data;
+const dateLabel = date
+  ? new Intl.DateTimeFormat('en-GB', { month: 'long', year: 'numeric', timeZone: 'UTC' })
+      .format(new Date(`${date}-01T00:00:00Z`))
+  : undefined;
 
 const series = essay.data.series ? await getSeries(essay.data.series) : undefined;
 const seriesEssays = essay.data.series ? await getSeriesEssays(essay.data.series) : [];
@@ -39,6 +43,7 @@ const description = essay.data.description ?? series?.data.description;
     <div class:list={['copy', featured || series?.data.description ? 'mt-[1.5em]' : 'mt-[3em]']}>
       <Content />
     </div>
+    {date && <p class="essay-date"><time datetime={date}>{dateLabel}</time></p>}
     {
       series && seriesEssays.length > 1 && (
         <nav class="mt-[3em]" aria-label={`More from ${series.data.title}`}>
@@ -61,3 +66,12 @@ const description = essay.data.description ?? series?.data.description;
     }
   </article>
 </Base>
+
+<style>
+  .essay-date {
+    margin-top: 2.5em;
+    font-size: .85em;
+    font-style: italic;
+    color: var(--color-ink);
+  }
+</style>

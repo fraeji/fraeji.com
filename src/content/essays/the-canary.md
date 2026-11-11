@@ -1,5 +1,6 @@
 ---
 title: "The Canary"
+date: "2025-06"
 order: 5
 featured:
   label: "This piece appeared in the anthology Wired Our Own Way, published by New Island Books, Ireland."

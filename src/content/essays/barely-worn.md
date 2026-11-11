@@ -1,5 +1,6 @@
 ---
 title: "Barely Worn"
+date: "2025-06"
 order: 2
 ---
 

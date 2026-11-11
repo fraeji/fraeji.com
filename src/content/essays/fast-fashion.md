@@ -1,5 +1,6 @@
 ---
 title: "Fast fashion’s reckoning cannot come soon enough"
+date: "2021-02"
 order: 7
 ---
 

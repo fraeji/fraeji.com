@@ -1,5 +1,6 @@
 ---
 title: "On supermarkets"
+date: "2026-07"
 order: 1
 featured:
   label: "This article was also featured in the Irish Times Abroad section."

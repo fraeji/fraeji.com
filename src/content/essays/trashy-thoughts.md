@@ -1,5 +1,6 @@
 ---
 title: "Trashy thoughts"
+date: "2025-06"
 order: 4
 ---
 

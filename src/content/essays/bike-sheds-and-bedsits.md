@@ -1,5 +1,6 @@
 ---
 title: "Bike sheds and bedsits"
+date: "2026-02"
 order: 3
 ---
 
