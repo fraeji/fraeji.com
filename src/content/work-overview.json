@@ -19,9 +19,21 @@
   },
   {
     "id": "citizenm",
+    "src": "/images/citizenm/rome/towel.webp",
+    "alt": "Marble bust wrapped in a towel",
+    "video": false
+  },
+  {
+    "id": "citizenm",
     "src": "../../assets/projects/citizenm/activation-1.jpg",
     "alt": "citizenM \u2014 activation 1",
     "video": false
+  },
+  {
+    "id": "citizenm",
+    "src": "/videos/citizenm/rome-artist-files.mp4",
+    "alt": "citizenM \u2014 rome artist files film",
+    "video": true
   },
   {
     "id": "nr-magazine",
@@ -516,12 +528,6 @@
     "video": true
   },
   {
-    "id": "citizenm",
-    "src": "/images/citizenm/rome/towel.webp",
-    "alt": "Marble bust wrapped in a towel",
-    "video": false
-  },
-  {
     "id": "otrium",
     "src": "../../assets/projects/otrium/otrium-you-5.jpg",
     "alt": "Otrium x You lookbook photograph 5 by Winter van den Brink",
@@ -603,12 +609,6 @@
     "id": "dyson",
     "src": "/videos/dyson/dyson-ontrac-city.mp4",
     "alt": "Dyson \u2014 dyson ontrac city film",
-    "video": true
-  },
-  {
-    "id": "citizenm",
-    "src": "/videos/citizenm/rome-artist-files.mp4",
-    "alt": "citizenM \u2014 rome artist files film",
     "video": true
   },
   {
