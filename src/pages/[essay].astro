@@ -40,10 +40,10 @@ const description = essay.data.description ?? series?.data.description;
         </p>
       )
     }
-    <div class:list={['copy', featured || series?.data.description ? 'mt-[1.5em]' : 'mt-[3em]']}>
+    {date && <p class="essay-date"><time datetime={date}>{dateLabel}</time></p>}
+    <div class:list={['copy', date || featured || series?.data.description ? 'mt-[1.5em]' : 'mt-[3em]']}>
       <Content />
     </div>
-    {date && <p class="essay-date"><time datetime={date}>{dateLabel}</time></p>}
     {
       series && seriesEssays.length > 1 && (
         <nav class="mt-[3em]" aria-label={`More from ${series.data.title}`}>
@@ -69,7 +69,8 @@ const description = essay.data.description ?? series?.data.description;
 
 <style>
   .essay-date {
-    margin-top: 2.5em;
+    margin-top: 1.5em;
+    text-align: right;
     font-size: .85em;
     font-style: italic;
     color: var(--color-ink);
