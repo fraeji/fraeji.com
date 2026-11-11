@@ -48,7 +48,13 @@ const topRowSources = [
   '/images/citizenm/rome/windows.jpg',
 ];
 const topRow = topRowSources.map((src) => overview.find((item) => item.src === src)!);
+const featuredCover = '/images/nr-magazine/02-NR17-Cover-VTSS-shot-by-Erika-Kamano-min-scaled.jpg';
 const remainingWork = overview.filter((item) => !topRowSources.includes(item.src));
+const orderedWork = [
+  ...topRow,
+  ...remainingWork.filter((item) => item.src === featuredCover),
+  ...remainingWork.filter((item) => item.src !== featuredCover),
+];
 
 ---
 
@@ -61,24 +67,17 @@ const remainingWork = overview.filter((item) => !topRowSources.includes(item.src
   </div>
 
   <div id="work-overview" class="work-overview" aria-label="Selected work overview">
-    {[
-      { className: 'work-overview__top-row', items: topRow },
-      { className: 'work-overview__masonry', items: remainingWork },
-    ].map(({ className, items }) => (
-      <div class={className}>
-        {items.map((item) => (
-          <a href={`/portfolio/${item.id}`} class="work-overview__item" aria-label={`${item.alt} — view ${logoNames[item.id]} project`}>
-            {item.video ? (
-              <video muted loop playsinline preload="metadata" aria-label={item.alt} data-overview-video>
-                <source src={item.src} type={item.src.endsWith('.webm') ? 'video/webm' : 'video/mp4'} />
-              </video>
-            ) : (
-              <Image src={item.image!} alt={item.alt} widths={[400, 700, 1000]} sizes="(max-width: 767px) 100vw, (max-width: 1100px) 50vw, 25vw" loading="lazy" />
-            )}
-            <span class="work-overview__caption" aria-hidden="true">{logoNames[item.id]} ↗</span>
-          </a>
-        ))}
-      </div>
+    {orderedWork.map((item) => (
+      <a href={`/portfolio/${item.id}`} class="work-overview__item" aria-label={`${item.alt} — view ${logoNames[item.id]} project`}>
+        {item.video ? (
+          <video muted loop playsinline preload="metadata" aria-label={item.alt} data-overview-video>
+            <source src={item.src} type={item.src.endsWith('.webm') ? 'video/webm' : 'video/mp4'} />
+          </video>
+        ) : (
+          <Image src={item.image!} alt={item.alt} widths={[400, 700, 1000]} sizes="(max-width: 767px) 100vw, (max-width: 1100px) 50vw, 25vw" loading="lazy" />
+        )}
+        <span class="work-overview__caption" aria-hidden="true">{logoNames[item.id]} ↗</span>
+      </a>
     ))}
   </div>
 
@@ -121,6 +120,22 @@ const remainingWork = overview.filter((item) => !topRowSources.includes(item.src
   document.querySelectorAll('[data-overview-video]').forEach((video) => filmObserver.observe(video));
   const controls = document.querySelector<HTMLElement>('.work-views');
   const overviewPanel = document.querySelector<HTMLElement>('#work-overview');
+  if (overviewPanel && 'ResizeObserver' in window) {
+    const tiles = overviewPanel.querySelectorAll<HTMLElement>('.work-overview__item');
+    const resizeTiles = new ResizeObserver((entries) => {
+      if (overviewPanel.hidden) return;
+      const styles = getComputedStyle(overviewPanel);
+      const gap = parseFloat(styles.columnGap);
+      const rowHeight = parseFloat(styles.gridAutoRows);
+      for (const { target, borderBoxSize } of entries) {
+        const tile = target as HTMLElement;
+        const height = borderBoxSize[0].blockSize;
+        tile.style.gridRowEnd = `span ${Math.ceil((height + gap) / rowHeight)}`;
+      }
+    });
+    overviewPanel.classList.add('is-masonry');
+    tiles.forEach((tile) => resizeTiles.observe(tile));
+  }
   const projectsPanel = document.querySelector<HTMLElement>('#work-projects');
   if (controls && overviewPanel && projectsPanel) {
     controls.hidden = false;
@@ -144,28 +159,26 @@ const remainingWork = overview.filter((item) => !topRowSources.includes(item.src
   .work-views button { font: inherit; color: var(--color-ink); background: none; border: 0; padding: .25rem 0; cursor: pointer; border-bottom: .08rem solid transparent; }
   .work-views button[aria-pressed="true"] { color: var(--color-pink); border-bottom-color: currentColor; }
   .work-views button:focus-visible, .work-overview__item:focus-visible { outline: .1rem solid var(--color-pink); outline-offset: .3rem; }
-  .work-overview { margin-top: 3rem; }
-  .work-overview__top-row {
+  .work-overview { columns: 4; column-gap: 1.25rem; margin-top: 3rem; }
+  .work-overview.is-masonry {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 1.25rem;
+    grid-auto-rows: 4px;
+    grid-auto-flow: dense;
     align-items: start;
-    margin-bottom: 1.25rem;
   }
-  .work-overview__top-row .work-overview__item { margin-bottom: 0; }
-  .work-overview__masonry { columns: 4; column-gap: 1.25rem; }
+  .work-overview.is-masonry .work-overview__item { margin-bottom: 0; }
   .work-overview__item { display: block; break-inside: avoid; position: relative; margin-bottom: 1.25rem; text-decoration: none; }
   .work-overview__item img, .work-overview__item video { display: block; width: 100%; height: auto; }
   .work-overview__caption { position: absolute; bottom: .65rem; left: .65rem; padding: .25rem .65rem; background: var(--color-paper, white); color: var(--color-ink); font-size: .85em; opacity: 0; transition: opacity 180ms ease; }
   .work-overview__item:hover .work-overview__caption, .work-overview__item:focus-visible .work-overview__caption { opacity: 1; }
   @media (max-width: 1100px) {
-    .work-overview__top-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .work-overview__masonry { columns: 2; }
+    .work-overview { columns: 2; }
+    .work-overview.is-masonry { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
   @media (max-width: 767px) {
-    .work-overview { margin-top: 2rem; }
-    .work-overview__top-row { grid-template-columns: minmax(0, 1fr); }
-    .work-overview__masonry { columns: 1; }
+    .work-overview { columns: 1; margin-top: 2rem; }
+    .work-overview.is-masonry { grid-template-columns: minmax(0, 1fr); }
   }
 
   .portfolio-logo-grid {
