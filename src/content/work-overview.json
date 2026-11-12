@@ -78,12 +78,6 @@
     "video": false
   },
   {
-    "id": "dyson",
-    "src": "../../assets/projects/dyson/journeys-of-time-3.jpg",
-    "alt": "Still from the Journeys of Time film",
-    "video": false
-  },
-  {
     "id": "citizenm",
     "src": "../../assets/projects/citizenm/in-app-2.jpg",
     "alt": "In-app: glyn\u2019s city guide",
@@ -126,12 +120,6 @@
     "video": false
   },
   {
-    "id": "dyson",
-    "src": "../../assets/projects/dyson/social-media-1.jpg",
-    "alt": "Dyson \u2014 social media 1",
-    "video": false
-  },
-  {
     "id": "nr-magazine",
     "src": "../../assets/projects/nr-magazine/nr-17-5.jpg",
     "alt": "NR Magazine \u2014 nr 17 5",
@@ -147,12 +135,6 @@
     "id": "otrium",
     "src": "../../assets/projects/otrium/b2c-2.jpg",
     "alt": "Otrium Instagram post with a model in a white T-shirt",
-    "video": false
-  },
-  {
-    "id": "dyson",
-    "src": "../../assets/projects/dyson/social-media-2.jpg",
-    "alt": "Dyson \u2014 social media 2",
     "video": false
   },
   {
@@ -264,12 +246,6 @@
     "video": false
   },
   {
-    "id": "dyson",
-    "src": "../../assets/projects/dyson/social-media-6.jpg",
-    "alt": "Dyson \u2014 social media 6",
-    "video": false
-  },
-  {
     "id": "citizenm",
     "src": "../../assets/projects/citizenm/organic-ugc-4.jpg",
     "alt": "citizenM post about Miami",
@@ -309,18 +285,6 @@
     "id": "vio",
     "src": "/images/vio/tov/slide-09.webp",
     "alt": "Vio independent wit principle",
-    "video": false
-  },
-  {
-    "id": "otrium",
-    "src": "../../assets/projects/otrium/festive-2.jpg",
-    "alt": "Otrium \u2014 festive 2",
-    "video": false
-  },
-  {
-    "id": "dyson",
-    "src": "../../assets/projects/dyson/social-media-8.jpg",
-    "alt": "Dyson \u2014 social media 8",
     "video": false
   },
   {
