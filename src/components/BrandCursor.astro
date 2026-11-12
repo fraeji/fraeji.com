@@ -1,0 +1,43 @@
+<style is:global>
+  @media (hover: hover) and (pointer: fine) {
+    body {
+      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='30' viewBox='0 0 26 30'%3E%3Cpath d='M3 2v22l5.6-5.2 4.6 9 4-2-4.6-8.6 7.4-.8z' fill='%23ff0aef' stroke='white' stroke-width='1.7' stroke-linejoin='round'/%3E%3C/svg%3E") 3 2, auto;
+    }
+  }
+
+  .cursor-sparkle {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: .65rem;
+    height: .65rem;
+    background: var(--color-pink);
+    clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+    pointer-events: none;
+    z-index: 150;
+  }
+</style>
+
+<script>
+  const sparklePreference = matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)');
+  let lastSparkle = 0;
+
+  window.addEventListener('pointermove', (event) => {
+    if (!sparklePreference.matches || event.pointerType !== 'mouse') return;
+    if (event.timeStamp - lastSparkle < 65) return;
+    lastSparkle = event.timeStamp;
+
+    const sparkle = document.createElement('span');
+    sparkle.className = 'cursor-sparkle';
+    sparkle.setAttribute('aria-hidden', 'true');
+    sparkle.style.left = `${event.clientX + 8}px`;
+    sparkle.style.top = `${event.clientY + 8}px`;
+    document.body.append(sparkle);
+
+    const fade = sparkle.animate([
+      { opacity: .85, transform: 'scale(.85) rotate(0deg)' },
+      { opacity: 0, transform: 'translateY(12px) scale(.2) rotate(45deg)' },
+    ], { duration: 380, easing: 'ease-out' });
+    fade.onfinish = () => sparkle.remove();
+  }, { passive: true });
+</script>

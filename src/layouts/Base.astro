@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import BrandCursor from '../components/BrandCursor.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 
 interface Props {
@@ -32,5 +33,6 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
       <slot />
       <SiteFooter />
     </main>
+    <BrandCursor />
   </body>
 </html>
