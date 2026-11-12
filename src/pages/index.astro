@@ -115,7 +115,7 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
 </Base>
 
 <style>
-  .homepage-work { margin-top: 2rem; }
+  .homepage-work { margin-top: clamp(2.75rem, 3vw, 4rem); }
   .homepage-work__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
   .homepage-work__grid img, .homepage-work__grid video { display: block; width: 100%; aspect-ratio: 5 / 4; object-fit: cover; }
   .homepage-work__grid .homepage-work__logo { object-fit: contain; background: #f7f5f2; }

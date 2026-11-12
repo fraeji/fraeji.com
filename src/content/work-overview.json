@@ -36,12 +36,6 @@
     "video": true
   },
   {
-    "id": "nr-magazine",
-    "src": "../../assets/projects/nr-magazine/nr-17-1.jpg",
-    "alt": "NR Magazine \u2014 nr 17 1",
-    "video": false
-  },
-  {
     "id": "vio",
     "src": "../../assets/projects/vio/book-like-an-insider-2.jpg",
     "alt": "Vio ad: \u201cDon\u2019t get played before you hit Vegas\u201d",
@@ -99,12 +93,6 @@
     "id": "citizenm",
     "src": "../../assets/projects/citizenm/in-app-3.jpg",
     "alt": "In-app city guide: Deuce Bar",
-    "video": false
-  },
-  {
-    "id": "nr-magazine",
-    "src": "../../assets/projects/nr-magazine/nr-17-4.jpg",
-    "alt": "NR Magazine \u2014 nr 17 4",
     "video": false
   },
   {
@@ -522,12 +510,6 @@
     "video": true
   },
   {
-    "id": "citizenm",
-    "src": "/images/citizenm/world/beauty-closeup.jpg",
-    "alt": "Close-up citizen portrait with red lipstick",
-    "video": false
-  },
-  {
     "id": "otrium",
     "src": "../../assets/projects/otrium/otrium-you-7.jpg",
     "alt": "Otrium x You lookbook photograph 7 by Winter van den Brink",
@@ -540,12 +522,6 @@
     "video": true
   },
   {
-    "id": "citizenm",
-    "src": "/images/citizenm/world/mannequin-kiss.jpg",
-    "alt": "Citizen portrait with a mannequin",
-    "video": false
-  },
-  {
     "id": "otrium",
     "src": "/videos/otrium/festive-2021-hd.mp4",
     "alt": "Otrium Festive 2021 campaign film",
@@ -556,12 +532,6 @@
     "src": "/videos/dyson/dyson-journeys-of-time.mp4",
     "alt": "Dyson \u2014 dyson journeys of time film",
     "video": true
-  },
-  {
-    "id": "citizenm",
-    "src": "/images/citizenm/world/seattle.jpg",
-    "alt": "Citizen portrait from the Seattle campaign",
-    "video": false
   },
   {
     "id": "otrium",
