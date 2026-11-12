@@ -24,20 +24,20 @@
 
   window.addEventListener('pointermove', (event) => {
     if (!sparklePreference.matches || event.pointerType !== 'mouse') return;
-    if (event.timeStamp - lastSparkle < 65) return;
+    if (event.timeStamp - lastSparkle < 35) return;
     lastSparkle = event.timeStamp;
 
     const sparkle = document.createElement('span');
     sparkle.className = 'cursor-sparkle';
     sparkle.setAttribute('aria-hidden', 'true');
-    sparkle.style.left = `${event.clientX + 8}px`;
-    sparkle.style.top = `${event.clientY + 8}px`;
+    sparkle.style.left = `${event.clientX + 6 + Math.random() * 14}px`;
+    sparkle.style.top = `${event.clientY + 6 + Math.random() * 14}px`;
     document.body.append(sparkle);
 
     const fade = sparkle.animate([
-      { opacity: .85, transform: 'scale(.85) rotate(0deg)' },
+      { opacity: 1, transform: 'scale(1) rotate(0deg)' },
       { opacity: 0, transform: 'translateY(12px) scale(.2) rotate(45deg)' },
-    ], { duration: 380, easing: 'ease-out' });
+    ], { duration: 540, easing: 'ease-out' });
     fade.onfinish = () => sparkle.remove();
   }, { passive: true });
 </script>
