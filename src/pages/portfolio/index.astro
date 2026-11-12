@@ -159,7 +159,8 @@ const orderedWork = [
   .work-views button { font: inherit; color: var(--color-ink); background: none; border: 0; padding: .25rem 0; cursor: pointer; border-bottom: .08rem solid transparent; }
   .work-views button[aria-pressed="true"] { color: var(--color-pink); border-bottom-color: currentColor; }
   .work-views button:focus-visible, .work-overview__item:focus-visible { outline: .1rem solid var(--color-pink); outline-offset: .3rem; }
-  .work-overview { columns: 4; column-gap: 1.25rem; margin-top: 3rem; }
+  .work-overview, .portfolio-logo-grid { margin-top: 3rem; }
+  .work-overview { columns: 4; column-gap: 1.25rem; }
   .work-overview.is-masonry {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -177,7 +178,8 @@ const orderedWork = [
     .work-overview.is-masonry { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   }
   @media (max-width: 767px) {
-    .work-overview { columns: 1; margin-top: 2rem; }
+    .work-overview, .portfolio-logo-grid { margin-top: 2rem; }
+    .work-overview { columns: 1; }
     .work-overview.is-masonry { grid-template-columns: minmax(0, 1fr); }
   }
 
@@ -185,7 +187,6 @@ const orderedWork = [
     display: grid;
     grid-template-columns: repeat(6, minmax(0, 1fr));
     gap: clamp(4rem, 9vw, 9rem) 3rem;
-    margin-top: clamp(4rem, 8vw, 8rem);
   }
 
   .portfolio-logo-grid li {
@@ -288,7 +289,6 @@ const orderedWork = [
   .portfolio-logo-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 4rem 2rem;
-    margin-top: 4rem;
   }
   .portfolio-logo-grid li:nth-child(n) { grid-column: auto; }
   .portfolio-logo { display: block; text-align: left; min-height: 0; }
