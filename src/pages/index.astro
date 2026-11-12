@@ -37,23 +37,6 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
 <Base>
   <SiteHeader />
 
-  <section class="homepage-work" aria-labelledby="homepage-work-heading">
-    <h2 class="label homepage-work__header" id="homepage-work-heading">
-      <a class="homepage-work__button" href="/portfolio/">Recent work</a>
-    </h2>
-    <div class="homepage-work__grid">
-      {homepageWork.map(([project, image, alt]) => (
-        <a href={`/portfolio/${project}/`} aria-label={alt}>
-          {typeof image === 'string' ? (
-            <video class:list={[{ 'homepage-work__logo': project === 'vio' }]} src={image} autoplay loop muted playsinline preload="metadata" aria-hidden="true"></video>
-          ) : (
-            <Image src={image} alt={alt} widths={[320, 640]} sizes="(max-width: 768px) 50vw, 25vw" loading="lazy" />
-          )}
-        </a>
-      ))}
-    </div>
-  </section>
-
   <div class="home-columns grid grid-cols-4 gap-x-12 max-md:grid-cols-1 max-md:gap-y-40">
     <section>
       <h2 class="label">Nice to meet you</h2>
@@ -114,14 +97,30 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
     </section>
   </div>
 
+  <section class="homepage-work" aria-labelledby="homepage-work-heading">
+    <h2 class="label homepage-work__header" id="homepage-work-heading">
+      <a href="/portfolio/">Recent work</a>
+    </h2>
+    <div class="homepage-work__grid">
+      {homepageWork.map(([project, image, alt]) => (
+        <a href={`/portfolio/${project}/`} aria-label={alt}>
+          {typeof image === 'string' ? (
+            <video class:list={[{ 'homepage-work__logo': project === 'vio' }]} src={image} autoplay loop muted playsinline preload="metadata" aria-hidden="true"></video>
+          ) : (
+            <Image src={image} alt={alt} widths={[320, 640]} sizes="(max-width: 768px) 50vw, 25vw" loading="lazy" />
+          )}
+        </a>
+      ))}
+    </div>
+  </section>
+
   <FlyingPhotos />
 </Base>
 
 <style>
-  .homepage-work { margin-bottom: clamp(4rem, 8vw, 8rem); }
+  .homepage-work { margin-top: clamp(4rem, 8vw, 8rem); }
   .homepage-work__header { margin-bottom: 1rem; }
   .homepage-work__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.25rem; }
-  .homepage-work__button { display: inline-block; padding: .35em .8em; border: 1px solid currentColor; text-decoration: none; }
   .homepage-work__grid img, .homepage-work__grid video { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
   .homepage-work__grid .homepage-work__logo { object-fit: contain; background: #f7f5f2; }
   @media (max-width: 768px) {
