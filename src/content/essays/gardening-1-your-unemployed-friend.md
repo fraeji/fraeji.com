@@ -1,5 +1,7 @@
 ---
 title: "Your unemployed friend on a Wednesday"
+date: "2026-10"
+description: "The first essay in Gardening, a series by Freya von Noorden Pierce. On redundancy and what happens when work no longer structures your days."
 order: 0
 series: gardening
 part: 1

@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import BrandCursor from '../components/BrandCursor.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 
 interface Props {
@@ -8,8 +9,8 @@ interface Props {
 }
 
 const siteTitle = 'Fraeji';
-const { title, description = 'Writing, creative strategy and campaigns. Based in Amsterdam.' } = Astro.props;
-const fullTitle = title ? `${title} — ${siteTitle}` : siteTitle;
+const { title, description = 'Freya von Noorden Pierce is a copywriter and creative based in Amsterdam. Explore her work in brand voice, campaign strategy and art direction, and read her essays.' } = Astro.props;
+const fullTitle = title ? `${title} — ${siteTitle}` : 'Freya von Noorden Pierce | Copywriter & Creative';
 const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
 
@@ -32,5 +33,6 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
       <slot />
       <SiteFooter />
     </main>
+    <BrandCursor />
   </body>
 </html>

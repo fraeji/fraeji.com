@@ -1,5 +1,7 @@
 ---
 title: "What I think about when I’m running"
+date: "2024-03"
+description: "An essay on running without headphones and what you notice when you’re finally alone with your thoughts."
 order: 6
 ---
 

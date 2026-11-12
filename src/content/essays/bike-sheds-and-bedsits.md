@@ -1,5 +1,7 @@
 ---
 title: "Bike sheds and bedsits"
+date: "2026-02"
+description: "An essay on Ireland’s housing crisis, public spending and what bike sheds and bedsits reveal about life in a wealthy country."
 order: 3
 ---
 

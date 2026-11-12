@@ -1,5 +1,7 @@
 ---
 title: "Trashy thoughts"
+date: "2025-06"
+description: "An essay on rubbish, rituals and the different ways Amsterdam asks its residents to take out the bins."
 order: 4
 ---
 

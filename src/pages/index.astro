@@ -1,5 +1,10 @@
 ---
 import { getCollection, getEntry, render } from 'astro:content';
+import otriumFestive from '../assets/projects/otrium/festive-4.jpg';
+import otriumLookbook from '../assets/projects/otrium/otrium-you-7.jpg';
+import romeBust from '../../public/images/citizenm/rome/towel.webp';
+import nrCover from '../../public/images/nr-magazine/02-NR17-Cover-VTSS-shot-by-Erika-Kamano-min-scaled.jpg';
+import dysonSummer from '../../public/images/dyson-british-summer-hero.jpg';
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import SiteHeader from '../components/SiteHeader.astro';
@@ -14,6 +19,17 @@ const { likes } = home.data;
 const essays = (await getEssays())
   .filter((essay) => essay.id !== 'gardening-1-your-unemployed-friend')
   .sort((a, b) => a.data.order - b.data.order);
+const homepageWork = [
+  ['vio', '/videos/vio/logo-animation.mp4', 'Vio logo animation'],
+  ['nr-magazine', nrCover, 'NR Magazine issue 17 cover featuring VTSS'],
+  ['citizenm', romeBust, 'Marble bust wrapped in a towel'],
+  ['otrium', otriumFestive, 'Two models in pink from Otrium’s festive campaign'],
+  ['dyson', '/videos/dyson/dyson-journeys-of-time.mp4', 'Dyson Women of Firsts campaign film'],
+  ['otrium', otriumLookbook, 'Model in sunglasses by a reflective shop window, photographed by Winter van den Brink'],
+  ['dyson', '/videos/dyson/linkedin-7270394155296559105.mp4', 'Dyson 360 Vis Nav faux out-of-home campaign'],
+  ['dyson', dysonSummer, 'Dyson Built for British Summer campaign posters'],
+] as const;
+
 const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
 ---
 
@@ -26,6 +42,7 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
       <div class="copy mt-[0.75em]">
         <Intro />
       </div>
+      <p class="mt-[0.75em]">Get in touch | <a href="mailto:fpierce7@gmail.com">Email</a> | <a href="https://twitter.com/fraeji">@fraeji</a></p>
     </section>
 
     <section>
@@ -69,6 +86,7 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
             </li>
           ))
         }
+        <li><a href="https://fraeji.substack.com/">Substack</a> | Follow me</li>
       </ul>
     </section>
 
@@ -80,10 +98,32 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
     </section>
   </div>
 
+  <section class="homepage-work" id="homepage-work-heading" aria-label="Recent work gallery">
+    <div class="homepage-work__grid">
+      {homepageWork.map(([project, image, alt]) => (
+        <a href={`/portfolio/${project}/`} aria-label={alt}>
+          {typeof image === 'string' ? (
+            <video class:list={[{ 'homepage-work__logo': project === 'vio' }]} src={image} autoplay loop muted playsinline preload="metadata" aria-hidden="true"></video>
+          ) : (
+            <Image src={image} alt={alt} widths={[320, 640]} sizes="(max-width: 768px) 50vw, 25vw" loading="lazy" />
+          )}
+        </a>
+      ))}
+    </div>
+  </section>
+
   <FlyingPhotos />
 </Base>
 
 <style>
+  .homepage-work { margin-top: clamp(2.75rem, 3vw, 4rem); }
+  .homepage-work__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+  .homepage-work__grid img, .homepage-work__grid video { display: block; width: 100%; aspect-ratio: 5 / 4; object-fit: cover; }
+  .homepage-work__grid .homepage-work__logo { object-fit: contain; background: #f7f5f2; }
+  @media (max-width: 768px) {
+    .homepage-work__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
+  }
+
   @media (min-width: 769px) { .home-columns { grid-template-columns: 1fr .65fr 1.2fr 1fr; } }
   .project-preview-link { position: relative; display: inline-block; }
   .project-hover-preview { position: fixed; top: 25vh; left: 42vw; width: min(45vw, 40rem); background: transparent; padding: 0; z-index: 100; pointer-events: none; opacity: 0; visibility: hidden; transform: translateY(.5rem); transition: opacity .18s, transform .18s, visibility .18s; }

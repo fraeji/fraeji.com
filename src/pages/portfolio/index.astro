@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 import { Image } from 'astro:assets';
+import allWork from '../../content/work-overview.json';
 
 const projects = (await getCollection('projects', ({ data }) => !data.draft)).sort(
   (a, b) => a.data.order - b.data.order,
@@ -29,20 +30,58 @@ const previews: Record<string, string> = {
   citizenm: '/videos/citizenm/rome-artist-files.mp4',
 };
 
+// Include the full asset collection, interleaved across clients.
+const assets = import.meta.glob<{ default: import('astro').ImageMetadata }>(
+  ['../../assets/projects/**/*.{jpg,jpeg,png,webp}', '../../../public/images/**/*.{jpg,jpeg,png,webp}'],
+  { eager: true },
+);
+const overview = allWork.map((item) => ({
+  ...item,
+  image: item.video ? undefined : assets[item.src.startsWith('/images/')
+    ? `../../../public${item.src}` : item.src].default,
+}));
+
+const topRowSources = [
+  '/images/citizenm/rome/towel.webp',
+  '/videos/dyson/dyson-airstrait-hero-clean.mp4',
+  '/videos/citizenm/rome-artist-files.mp4',
+  '/images/citizenm/rome/windows.jpg',
+];
+const topRow = topRowSources.map((src) => overview.find((item) => item.src === src)!);
+const featuredCover = '/images/nr-magazine/02-NR17-Cover-VTSS-shot-by-Erika-Kamano-min-scaled.jpg';
+const remainingWork = overview.filter((item) => !topRowSources.includes(item.src));
+const orderedWork = [
+  ...topRow,
+  ...remainingWork.filter((item) => item.src === featuredCover),
+  ...remainingWork.filter((item) => item.src !== featuredCover),
+];
+
 ---
 
 <Base title="Portfolio" description="Selected copywriting, creative direction and editorial work.">
   <SiteHeader linkHome />
 
-  <h2 class="display text-pink portfolio-title">Recent work</h2>
-
-  <div class="portfolio-intro" aria-label="Portfolio introduction">
-    <p>
-      Whether you’re searching for your brand voice, need help with storyboarding or are looking for a killer campaign script, I can help. Let’s make some cool work together.
-    </p>
+  <div class="work-views" aria-label="Work views" hidden>
+    <button type="button" aria-pressed="true" aria-controls="work-overview" data-work-view="overview">Overview</button>
+    <button type="button" aria-pressed="false" aria-controls="work-projects" data-work-view="projects">Projects</button>
   </div>
 
-  <ul class="portfolio-logo-grid" aria-label="Portfolio case studies">
+  <div id="work-overview" class="work-overview" aria-label="Selected work overview">
+    {orderedWork.map((item) => (
+      <a href={`/portfolio/${item.id}`} class="work-overview__item" aria-label={`${item.alt} — view ${logoNames[item.id]} project`}>
+        {item.video ? (
+          <video muted loop playsinline preload="metadata" aria-label={item.alt} data-overview-video>
+            <source src={item.src} type={item.src.endsWith('.webm') ? 'video/webm' : 'video/mp4'} />
+          </video>
+        ) : (
+          <Image src={item.image!} alt={item.alt} widths={[400, 700, 1000]} sizes="(max-width: 767px) 100vw, (max-width: 1100px) 50vw, 25vw" loading="lazy" />
+        )}
+        <span class="work-overview__caption" aria-hidden="true">{logoNames[item.id]} ↗</span>
+      </a>
+    ))}
+  </div>
+
+  <ul id="work-projects" class="portfolio-logo-grid" aria-label="Portfolio case studies">
     {
       projects.map((project) => (
         <li>
@@ -69,35 +108,85 @@ const previews: Record<string, string> = {
 
 </Base>
 
+<script>
+  // Load and play only nearby films in the larger collection.
+  const filmObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      const video = entry.target as HTMLVideoElement;
+      if (entry.isIntersecting) video.play().catch(() => undefined);
+      else video.pause();
+    });
+  }, { rootMargin: '200px' });
+  document.querySelectorAll('[data-overview-video]').forEach((video) => filmObserver.observe(video));
+  const controls = document.querySelector<HTMLElement>('.work-views');
+  const overviewPanel = document.querySelector<HTMLElement>('#work-overview');
+  if (overviewPanel && 'ResizeObserver' in window) {
+    const tiles = overviewPanel.querySelectorAll<HTMLElement>('.work-overview__item');
+    const resizeTiles = new ResizeObserver((entries) => {
+      if (overviewPanel.hidden) return;
+      const styles = getComputedStyle(overviewPanel);
+      const gap = parseFloat(styles.columnGap);
+      const rowHeight = parseFloat(styles.gridAutoRows);
+      for (const { target, borderBoxSize } of entries) {
+        const tile = target as HTMLElement;
+        const height = borderBoxSize[0].blockSize;
+        tile.style.gridRowEnd = `span ${Math.ceil((height + gap) / rowHeight)}`;
+      }
+    });
+    overviewPanel.classList.add('is-masonry');
+    tiles.forEach((tile) => resizeTiles.observe(tile));
+  }
+  const projectsPanel = document.querySelector<HTMLElement>('#work-projects');
+  if (controls && overviewPanel && projectsPanel) {
+    controls.hidden = false;
+    projectsPanel.hidden = true;
+    controls.querySelectorAll<HTMLButtonElement>('button').forEach((button) => {
+      button.addEventListener('click', () => {
+        const showOverview = button.dataset.workView === 'overview';
+        overviewPanel.hidden = !showOverview;
+        projectsPanel.hidden = showOverview;
+        controls.querySelectorAll('button').forEach((control) => {
+          control.setAttribute('aria-pressed', String(control === button));
+        });
+      });
+    });
+  }
+</script>
+
 <style>
+  [hidden] { display: none !important; }
+  .work-views { display: flex; justify-content: center; gap: 1.5rem; margin-top: 2.5rem; }
+  .work-views button { font: inherit; color: var(--color-ink); background: none; border: 0; padding: .25rem 0; cursor: pointer; border-bottom: .08rem solid transparent; }
+  .work-views button[aria-pressed="true"] { color: var(--color-pink); border-bottom-color: currentColor; }
+  .work-views button:focus-visible, .work-overview__item:focus-visible { outline: .1rem solid var(--color-pink); outline-offset: .3rem; }
+  .work-overview, .portfolio-logo-grid { margin-top: 3rem; }
+  .work-overview { columns: 4; column-gap: 1.25rem; }
+  .work-overview.is-masonry {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-auto-rows: 4px;
+    grid-auto-flow: dense;
+    align-items: start;
+  }
+  .work-overview.is-masonry .work-overview__item { margin-bottom: 0; }
+  .work-overview__item { display: block; break-inside: avoid; position: relative; margin-bottom: 1.25rem; text-decoration: none; }
+  .work-overview__item img, .work-overview__item video { display: block; width: 100%; height: auto; }
+  .work-overview__caption { position: absolute; bottom: .65rem; left: .65rem; padding: .25rem .65rem; background: var(--color-paper, white); color: var(--color-ink); font-size: .85em; opacity: 0; transition: opacity 180ms ease; }
+  .work-overview__item:hover .work-overview__caption, .work-overview__item:focus-visible .work-overview__caption { opacity: 1; }
+  @media (max-width: 1100px) {
+    .work-overview { columns: 2; }
+    .work-overview.is-masonry { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 767px) {
+    .work-overview, .portfolio-logo-grid { margin-top: 2rem; }
+    .work-overview { columns: 1; }
+    .work-overview.is-masonry { grid-template-columns: minmax(0, 1fr); }
+  }
+
   .portfolio-logo-grid {
     display: grid;
     grid-template-columns: repeat(6, minmax(0, 1fr));
     gap: clamp(4rem, 9vw, 9rem) 3rem;
-    margin-top: clamp(4rem, 8vw, 8rem);
-  }
-
-  .portfolio-title {
-    max-width: 52rem;
-    margin-inline: auto;
-    text-align: left;
-  }
-
-  .portfolio-intro {
-    max-width: 52rem;
-    margin: 1.5em auto 0;
-    text-align: left;
-    color: var(--color-ink);
-    font-size: inherit;
-    line-height: inherit;
-  }
-
-  .portfolio-intro p {
-    margin: 0;
-  }
-
-  .portfolio-intro p + p {
-    margin-top: 1em;
   }
 
   .portfolio-logo-grid li {
@@ -200,7 +289,6 @@ const previews: Record<string, string> = {
   .portfolio-logo-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 4rem 2rem;
-    margin-top: 4rem;
   }
   .portfolio-logo-grid li:nth-child(n) { grid-column: auto; }
   .portfolio-logo { display: block; text-align: left; min-height: 0; }
