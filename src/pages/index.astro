@@ -97,10 +97,7 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
     </section>
   </div>
 
-  <section class="homepage-work" aria-labelledby="homepage-work-heading">
-    <h2 class="label homepage-work__header" id="homepage-work-heading">
-      <a href="/portfolio/">Recent work</a>
-    </h2>
+  <section class="homepage-work" id="homepage-work-heading" aria-label="Recent work gallery">
     <div class="homepage-work__grid">
       {homepageWork.map(([project, image, alt]) => (
         <a href={`/portfolio/${project}/`} aria-label={alt}>
@@ -118,10 +115,9 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
 </Base>
 
 <style>
-  .homepage-work { margin-top: clamp(4rem, 8vw, 8rem); }
-  .homepage-work__header { margin-bottom: 1rem; }
-  .homepage-work__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.25rem; }
-  .homepage-work__grid img, .homepage-work__grid video { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+  .homepage-work { margin-top: 2rem; }
+  .homepage-work__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+  .homepage-work__grid img, .homepage-work__grid video { display: block; width: 100%; aspect-ratio: 5 / 4; object-fit: cover; }
   .homepage-work__grid .homepage-work__logo { object-fit: contain; background: #f7f5f2; }
   @media (max-width: 768px) {
     .homepage-work__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
