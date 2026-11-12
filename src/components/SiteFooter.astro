@@ -18,9 +18,9 @@ const { name, email, links, handle } = home.data;
   <nav aria-label="Contact and social links">
     <p class="text-muted">Elsewhere</p>
     <a href={`mailto:${email}`}>Get in touch</a>
-    <span>Subscribe to my <a href="https://fraeji.substack.com/">Substack</a></span>
     {links.map((link) => <a href={link.url} target="_blank" rel="noopener">{link.label}</a>)}
     <span><a href={handle.url} target="_blank" rel="noopener">{handle.label}</a> everywhere.</span>
+    <span>Subscribe to my <a href="https://fraeji.substack.com/">Substack</a></span>
   </nav>
   </div>
 </footer>
