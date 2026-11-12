@@ -1,5 +1,13 @@
 ---
 import { getCollection, getEntry, render } from 'astro:content';
+import vioBillboard from '../assets/projects/vio/save-money-while-you-sleep-1.jpg';
+import dysonVolleyball from '../assets/projects/dyson/sultans-of-the-air-4.jpg';
+import otriumFestive from '../assets/projects/otrium/festive-4.jpg';
+import otriumMcQueen from '../assets/projects/otrium/mcqueen-1.jpg';
+import romeWindows from '../../public/images/citizenm/rome/windows.jpg';
+import romeBust from '../../public/images/citizenm/rome/towel.webp';
+import nrCover from '../../public/images/nr-magazine/02-NR17-Cover-VTSS-shot-by-Erika-Kamano-min-scaled.jpg';
+import dysonSummer from '../../public/images/dyson-british-summer-hero.jpg';
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import SiteHeader from '../components/SiteHeader.astro';
@@ -14,6 +22,17 @@ const { likes } = home.data;
 const essays = (await getEssays())
   .filter((essay) => essay.id !== 'gardening-1-your-unemployed-friend')
   .sort((a, b) => a.data.order - b.data.order);
+const homepageWork = [
+  ['vio', vioBillboard, 'Vio billboard reading Save money while you sleep'],
+  ['nr-magazine', nrCover, 'NR Magazine issue 17 cover featuring VTSS'],
+  ['citizenm', romeWindows, 'Marble busts in the windows of citizenM Rome'],
+  ['otrium', otriumFestive, 'Two models in pink from Otrium’s festive campaign'],
+  ['dyson', dysonVolleyball, 'Volleyball player in motion under a spotlight'],
+  ['otrium', otriumMcQueen, 'Model in a green leather Alexander McQueen dress'],
+  ['citizenm', romeBust, 'Marble bust wrapped in a towel'],
+  ['dyson', dysonSummer, 'Dyson Built for British Summer campaign posters'],
+] as const;
+
 const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
 ---
 
@@ -80,10 +99,32 @@ const projects = (await getCollection('projects')).sort((a, b) => a.data.order -
     </section>
   </div>
 
+  <section class="homepage-work" aria-labelledby="homepage-work-heading">
+    <div class="homepage-work__header">
+      <h2 class="label" id="homepage-work-heading">Selected work</h2>
+      <a href="/portfolio/">View portfolio ↗</a>
+    </div>
+    <div class="homepage-work__grid">
+      {homepageWork.map(([project, image, alt]) => (
+        <a href={`/portfolio/${project}/`}>
+          <Image src={image} alt={alt} widths={[320, 640]} sizes="(max-width: 768px) 50vw, 25vw" loading="lazy" />
+        </a>
+      ))}
+    </div>
+  </section>
+
   <FlyingPhotos />
 </Base>
 
 <style>
+  .homepage-work { margin-top: clamp(4rem, 8vw, 8rem); }
+  .homepage-work__header { display: flex; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
+  .homepage-work__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.25rem; }
+  .homepage-work__grid img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+  @media (max-width: 768px) {
+    .homepage-work__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
+  }
+
   @media (min-width: 769px) { .home-columns { grid-template-columns: 1fr .65fr 1.2fr 1fr; } }
   .project-preview-link { position: relative; display: inline-block; }
   .project-hover-preview { position: fixed; top: 25vh; left: 42vw; width: min(45vw, 40rem); background: transparent; padding: 0; z-index: 100; pointer-events: none; opacity: 0; visibility: hidden; transform: translateY(.5rem); transition: opacity .18s, transform .18s, visibility .18s; }
