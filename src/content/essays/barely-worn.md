@@ -1,6 +1,7 @@
 ---
 title: "Barely Worn"
 date: "2025-06"
+description: "Freya von Noorden Pierce on clothes, clutter and the peculiar promises we make ourselves when we put something up for sale."
 order: 2
 ---
 

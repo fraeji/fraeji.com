@@ -1,6 +1,7 @@
 ---
 title: "On supermarkets"
 date: "2026-07"
+description: "An ode to supermarkets, from Dutch grocery aisles to the pleasure of finding a perfectly ripe tomato back home."
 order: 1
 featured:
   label: "This article was also featured in the Irish Times Abroad section."

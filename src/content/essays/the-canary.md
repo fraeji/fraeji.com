@@ -1,6 +1,7 @@
 ---
 title: "The Canary"
 date: "2025-06"
+description: "Read The Canary by Freya von Noorden Pierce, an essay featured in the Irish anthology Wired Our Own Way."
 order: 5
 featured:
   label: "This piece appeared in the anthology Wired Our Own Way, published by New Island Books, Ireland."

@@ -1,6 +1,7 @@
 ---
 title: "Fast fashion’s reckoning cannot come soon enough"
 date: "2021-02"
+description: "An essay on PrettyLittleThing’s fashion show, the protest outside and the labour behind fast fashion."
 order: 7
 ---
 
