@@ -37,6 +37,6 @@ likes:
   - Arrested Development reruns
 ---
 
-I’m a copywriter and creative based in Amsterdam. I’ve been writing, taking photos, drawing and creating imaginary (and real) concepts to satisfy my creative itch. I’ve written about things I find interesting for newspapers, magazines and even a published anthology.
+I’m a copywriter and creative based in Amsterdam. I’ve been writing, taking photos, drawing, and creating imaginary (and real) concepts to satisfy my creative itch. I’ve written about things I find interesting for newspapers, magazines and even a published anthology.
 
 With expertise in campaign strategy, copy and art direction, I’m the teammate who makes sure every detail is considered. I’ve got a curious mind and an eye for aesthetics and quirk; I want to try it all and make sure you’re chuffed with the results, too.
