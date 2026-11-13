@@ -34,7 +34,7 @@ In this hair care campaign for Dyson’s MEA market, we shone a light on women w
 
 _Your routine, simplified._
 
-For Dyson’s Italian market launch of the Airstrait™, we asked six women how the Airstrait™ helps improve their beauty routines. The campaign spanned full-length videos on YouTube and our social channels, alongside a web and CRM journey for which I developed the copy strategy and wrote the copy.
+For Dyson’s Italian market launch of the Airstrait™, we asked six women how the Airstrait™ helps improve their beauty routines. The campaign spanned full-length videos on YouTube and our social channels, alongside a web and CRM journey for which I developed the strategy and wrote the copy.
 
 [See the full campaign](https://www.dyson.nl/discover/jouw-apparaten/how-to/journeys-of-time)
 
@@ -60,7 +60,7 @@ Leading concepts, writing and approving Dyson copy across EMEA social channels.
 
 For the campaign ‘Sultans of the Air’ starring Türkiye’s National Women’s Volleyball Team, we combined the powerful movement of these sportswomen with Dyson’s powerful machine engineering.
 
-As with previous Dyson ‘personality’ campaigns, we matched a hair care machine to each player so she could express herself through her individual hairstyle. Alongside the out-of-home campaign, it ran as a CRM and digital journey, for which I developed the copy strategy and wrote the copy.
+As with previous Dyson ‘personality’ campaigns, we matched a hair care machine to each player so she could express herself through her individual hairstyle. Alongside the out-of-home campaign, it ran as a CRM and digital journey, for which I developed the strategy and wrote the copy.
 
 ![Volleyball player with a Dyson hair care machine](../../assets/projects/dyson/sultans-of-the-air-1.jpg)
 ![Volleyball player with a Dyson Supersonic](../../assets/projects/dyson/sultans-of-the-air-2.jpg)
