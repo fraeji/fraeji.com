@@ -1374,14 +1374,14 @@
 }
 
 
-/* Keep portfolio and case-study titles at the same quieter scale. */
-.portfolio-title,
+/* Keep page titles at the same quieter scale. */
+h2.display,
 .project-page .project-heading > h2 {
-  font-size: 2.8rem;
+  font-size: 2.5rem;
 }
 @media (max-width: 767px) {
-  .portfolio-title,
+  h2.display,
   .project-page .project-heading > h2 {
-    font-size: 2.4rem;
+    font-size: 2.15rem;
   }
 }

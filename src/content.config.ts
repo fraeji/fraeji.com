@@ -38,6 +38,8 @@ const essays = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/essays' }),
   schema: z.object({
     title: z.string(),
+    // Publication month, stored without inventing a day.
+    date: z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/).optional(),
     // Position in the "Writing" list on the homepage. Lower comes first.
     order: z.number(),
     description: z.string().optional(),

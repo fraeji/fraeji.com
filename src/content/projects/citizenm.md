@@ -13,11 +13,11 @@ The self-confessed disruptor of hotels. citizenM has a distinctive, bold and che
 
 ## Opening citizenM Rome
 
-When launching our first hotel in Rome, we needed a way to introduce a modern hotel in a city steeped in history, appealing to an audience of modern travellers while nodding to the ancient monuments that surround the new location.
+When launching our first hotel in Rome, we needed a way to introduce a modern hotel in an ancient city, appealing to an audience of modern travellers while nodding to the ancient monuments throughout the Eternal City.
 
-My team and I highlighted five local citizens whose performing, cooking, crafting, designing and composing embody the new modern face of Rome. With agencies KesselsKramer and Neighbour London, we sculpted citizens of Rome as digital marble busts and rendered them spinning in 360 degrees, bringing the juxtaposition of old and new worlds to life.
+My team and I highlighted five local citizens who embody the new modern face of Rome. With agencies KesselsKramer and Neighbour London, we sculpted citizens of Rome as digital marble busts and rendered them spinning in 360 degrees, bringing the juxtaposition of old and new worlds to life.
 
-The project culminated in an out-of-home campaign in key Italian cities, a social media campaign and a five-storey building exhibition, which turned the new hotel into a billboard.
+The project resulted in an out-of-home campaign in key Italian cities, a social media campaign and a five-storey building exhibition, which turned the new hotel into a billboard.
 
 ![Marble bust with a croissant](/images/citizenm/rome/croissant.webp)
 ![Marble bust wrapped in a towel](/images/citizenm/rome/towel.webp)

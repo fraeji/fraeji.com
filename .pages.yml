@@ -34,6 +34,9 @@ content:
         label: Title
         type: string
         required: true
+      - name: date
+        label: Publication month (YYYY-MM)
+        type: string
       - name: order
         label: Position in the Writing list (lower comes first)
         type: number

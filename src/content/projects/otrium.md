@@ -32,7 +32,7 @@ _Do it twice as good_
 
 For our 2021 festive campaign, we embraced the theme of opulence within everyday life after a difficult two years of staying indoors and distancing from loved ones. The result of this was to go ‘all out’ – think glittery extravagance mingling with otherwise mundane, everyday themes of the city.
 
-With the usual theme of festivity and celebration fully embraced, we wanted to encourage our customers to think about living in the moment and enjoying the time they spend with others. After a long time of being isolated, it’s time to push the boat out with your nearest and dearest; dressed up and over the top to make up for lost time.
+With the usual theme of festivity and celebration fully embraced, we wanted to encourage our customers to think about living in the moment and enjoying the time they spend with others. After a long time of being isolated, it’s time to push the boat out with your nearest and dearest, dressed up and over the top to make up for lost time.
 
 ![Model in a gold sequin dress in front of a yellow van](../../assets/projects/otrium/festive-1.jpg)
 
@@ -60,7 +60,7 @@ We wanted the softness of the warm cedar wood to contrast against the rougher le
 
 ## Social copy
 
-Instagram was Otrium’s fastest-growing and most followed social platform. With these product shots, the copy is brief and casual, which I used to emulate a down-to-earth tone of voice.
+Instagram was Otrium’s fastest-growing and most-followed social platform. With these product shots, the copy is brief and casual, which I used to emulate a down-to-earth tone of voice.
 
 ![Otrium Instagram post with a coral handbag](../../assets/projects/otrium/b2c-social-1.jpg)
 ![Otrium Instagram post with yellow slip-on shoes](../../assets/projects/otrium/b2c-social-2.jpg)
